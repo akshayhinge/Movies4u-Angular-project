@@ -13,9 +13,10 @@ export class MoviesService {
 
   constructor(private http: HttpClient) {
     this.baseUrl = 'https://api.themoviedb.org/3/';
-    this.apiKey = 'dd4d819639705d332d531217b4f7c6b6';
+    // this.apiKey = 'dd4d819639705d332d531217b4f7c6b6';
+    this.apiKey = '2f0353cde3bd4cfe35225d005de3ca22';
     this.language = 'en-US';
-    this.region = 'US';
+    this.region = 'IN';
   }
 
   getNowPlaying(page: number): Observable<any> {

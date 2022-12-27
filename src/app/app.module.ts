@@ -15,7 +15,7 @@ import { PipeModule } from './pipe/pipe.module';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { SkeletonModule } from './shared/skeleton/skeleton.module';
-
+import {ButtonModule} from 'primeng/button';
 
 @NgModule({
   declarations: [
@@ -37,7 +37,8 @@ import { SkeletonModule } from './shared/skeleton/skeleton.module';
     SidebarModule,
     MatProgressSpinnerModule,
     MatProgressBarModule,
-    SkeletonModule
+    SkeletonModule,
+    ButtonModule
   ],
 
   bootstrap: [AppComponent]

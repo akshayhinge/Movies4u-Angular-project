@@ -8,7 +8,7 @@ import { delay } from 'rxjs/internal/operators/delay';
   styleUrls: ['./movies.component.scss']
 })
 export class MoviesComponent implements OnInit {
-  topRated: any;
+  topRated: any=[];
   responsiveOptions;
   loader = true;
   totalResults: any;
@@ -41,9 +41,12 @@ export class MoviesComponent implements OnInit {
   }
 
   getTopRatedMovies(page: number) {
-    this.movieService.getTopRatedMovies(page).pipe(delay(2000)).subscribe((res: any) => {
-      this.topRated = res.results;
+    this.movieService.getPopular(page).pipe(delay(2000)).subscribe((res: any) => {
+      this.topRated=res.results;
+      
+      
       this.totalResults = res.total_results;
+      console.log("total"+ this.totalResults);
       this.loader = false;
     },
     error => console.log(error));

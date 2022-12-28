@@ -38,7 +38,8 @@ import {ButtonModule} from 'primeng/button';
     MatProgressSpinnerModule,
     MatProgressBarModule,
     SkeletonModule,
-    ButtonModule
+    ButtonModule,
+    
   ],
 
   bootstrap: [AppComponent]

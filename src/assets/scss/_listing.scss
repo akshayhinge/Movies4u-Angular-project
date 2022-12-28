@@ -11,7 +11,12 @@
       margin: 5.1rem;
     }
   }
-  
+  @mixin d-flex{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   .listing__head {
     display: flex;
     align-items: baseline;
@@ -66,6 +71,10 @@
       transition: all .5s ease-out;
       border-top-left-radius: 5px;
       border-top-right-radius: 5px;
+      &:hover{
+        background-color: black;
+        opacity: .5;
+      }
     }
   
     h6 {
@@ -84,17 +93,17 @@
     }
   
     .rate {
-      font-size: 12px;
+      font-size: 1rem;
       background: rgba(11, 26, 42, .95);
       padding: 1px 7px;
       border-radius: 5px;
       position: absolute;
       top: 0px;
       left: 8px;
-  
+      @include d-flex;
       i {
-        font-size: 16px;
-        margin-right: 5px;
+        font-size: 1.5rem;
+        margin-right: 1px !important;
       }
   
       .material-icons {
@@ -103,7 +112,7 @@
   
       span {
         color: $base-font-color;
-        font-size: 16px;
+        font-size: 1.2rem;
         font-weight: 400;
       }
     }
@@ -118,7 +127,7 @@
       bottom: 21px;
       color: #fff;
       pointer-events: none;
-      font-size: 14px;
+      font-size: 1rem;
       font-weight: 400;
     }
   }
@@ -139,33 +148,37 @@
     width: 100%;
     opacity: 0;
     transition: .5s ease;
-    background-color: transparent;
+    // box-shadow: inset 0px 20px 48px 0px black;
+
+    background-color: #00000073;
   }
   
   
   .hover {
     position: absolute;
+    @include d-flex();
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
     font-family: Dosis, sans-serif;
-    font-size: 14px;
+    font-size: 1rem;
     font-weight: 700;
     color: #fff;
     background-color: $secondary-color;
-    padding: 8px 15px;
+    padding: 5px 8px;
     z-index: 2;
-    width: 120px;
-    height: 38px;
+    width: fit-content;
+    // height: 38px;
     border-radius: 1px;
     cursor: pointer;
     transition: all .5s ease-out;
     
     i {
-      position: absolute;
+     
+      // position: absolute;
       line-height: 25px;
-      font-size: 13px;
+      font-size: 1rem;
       left: 13px;
     }
   }

@@ -1,6 +1,6 @@
-<ng-container>
+<!-- <ng-container>
     <app-slider></app-slider>
-</ng-container>
+</ng-container> -->
 
 <div class="listing">
     <div class="listing__head">
@@ -11,7 +11,7 @@
     </div>
     
     <app-skeleton *ngIf="loader" ></app-skeleton>
-    <p-carousel [value]="nowPlaying " [numVisible]="6" [numScroll]="1"  [autoplayInterval]="3000" [circular]="true" *ngIf="!loader"
+    <p-carousel [value]="nowPlaying | sort : 'release_date'" [numVisible]="6" [numScroll]="1"  [autoplayInterval]="3000" [circular]="true" *ngIf="!loader"
         [responsiveOptions]="responsiveOptions">
         <ng-template let-movie  pTemplate="item">
             <div class="listing-item-style" [routerLink]="['/movies/', movie.id]">
@@ -22,7 +22,7 @@
                 <img *ngIf="movie?.poster_path"
                     src="https://image.tmdb.org/t/p/w370_and_h556_bestv2/{{movie?.poster_path}}">
                 <img *ngIf="!movie?.poster_path" src="assets/images/default-movie.png">
-                <h6>{{ movie?.title }} movie?.</h6>
+                <h6>{{ movie.title }}</h6>
                 
                 <p class="rate"><i class="material-icons">star</i><span>{{movie?.vote_average}}</span> /10</p>
                 <p class="year"><span>{{movie?.release_date | date: 'yyyy'}}</span>

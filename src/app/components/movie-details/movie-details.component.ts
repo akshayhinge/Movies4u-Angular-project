@@ -32,17 +32,17 @@ export class MovieDetailsComponent implements OnInit {
     this.responsiveOptions = [
       {
           breakpoint: '1024px',
-          numVisible: 3,
-          numScroll: 3
+          numVisible: 6,
+          numScroll: 1
       },
       {
           breakpoint: '768px',
-          numVisible: 2,
-          numScroll: 2
+          numVisible: 6,
+          numScroll: 1
       },
       {
           breakpoint: '560px',
-          numVisible: 1,
+          numVisible: 4,
           numScroll: 1
       }
   ];

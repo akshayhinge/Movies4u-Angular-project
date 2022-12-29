@@ -19,7 +19,9 @@ export class TvService {
     this.language = 'en-HI';
     this.region = 'IN';
   }
-
+  getDiscoverTVShow(page:number,sort_by:string,language:string,year:number):Observable<any>{
+    return this.http.get(`${this.baseUrl}discover/tv?api_key=${this.apiKey}&language=${this.language}&sort_by=${sort_by}&first_air_date_year=${year}&page=${page}&include_null_first_air_dates=false&with_original_language=${language}&watch_region=${this.region}`);
+  }
   getTvOnTheAir(page: number): Observable<any> {
     return this.http.get(`${this.baseUrl}tv/on_the_air?api_key=${this.apiKey}&page=${page}&language=${this.language}`);
   }

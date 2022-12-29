@@ -15,10 +15,13 @@ export class MoviesService {
     this.baseUrl = 'https://api.themoviedb.org/3/';
     // this.apiKey = 'dd4d819639705d332d531217b4f7c6b6';
     this.apiKey = '2f0353cde3bd4cfe35225d005de3ca22';
-    this.language = 'en-US';
+    this.language = 'en-HI';
     this.region = 'IN';
   }
 
+  getDiscoverMovie(page:number,sort_by:string,adult:boolean,video:boolean,language:string):Observable<any>{
+    return this.http.get(`${this.baseUrl}discover/movie?api_key=${this.apiKey}&language=${this.language}&region=${this.region}&sort_by=${sort_by}&include_adult=${adult}&include_video=${video}&page=${page}&primary_release_year=2022&with_original_language=${language}&watch_region=${this.region}`);
+  }
   getNowPlaying(page: number): Observable<any> {
     // tslint:disable-next-line: max-line-length
     return this.http.get(`${this.baseUrl}movie/now_playing?api_key=${this.apiKey}&page=${page}&language=${this.language}&region=${this.region}`);
@@ -26,6 +29,9 @@ export class MoviesService {
 
   searchMovies(searchStr: string): Observable<any> {
     return this.http.get(`${this.baseUrl}search/movie?api_key=${this.apiKey}&query=${searchStr}`);
+  }
+  multisearch(page:number,searchStr: string,adult:boolean): Observable<any> {
+    return this.http.get(`${this.baseUrl}search/multi?api_key=${this.apiKey}&language=${this.language}&query=${searchStr}&page=${page}&include_adult=${adult}&region=${this.region}`);
   }
 
   getPopular(page: number): Observable<any> {

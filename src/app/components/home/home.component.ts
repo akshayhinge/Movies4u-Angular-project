@@ -2,6 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MoviesService } from 'src/app/service/movies.service';
 import { TvService } from 'src/app/service/tv.service';
 import { delay } from 'rxjs/internal/operators/delay';
+import { concat } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -11,7 +12,7 @@ import { delay } from 'rxjs/internal/operators/delay';
 })
 export class HomeComponent implements OnInit {
   nowPlaying: any=[];
-  tvShows: any;
+  tvShows: any=[];
   both:any;
   responsiveOptions;
   loader = true;
@@ -43,37 +44,42 @@ export class HomeComponent implements OnInit {
     ];
   }
   ngOnInit() {
-    this.trendingMovies(1);
+ 
+      this.trendingMovies(2);
+      this.trendingMovies(1);
     this.tvShow(1);
+    this.tvShow(2);
   }
 
   trendingMovies(page: number) {
-    this.movies.getNowPlaying(page).pipe(delay(2000)).subscribe((res: any) => {
-      // let tem:any= res.results;
-      this.nowPlaying = res.results;
-      this.loader = false;
-      // const result = res.results.find(element => {
-      //   return element.original_language.toUpperCase() === "HI";
-      // });
-      // this.nowPlaying=result;
+    // this.movies.getNowPlaying(page).pipe(delay(2000)).subscribe((res: any) => {
+    //   this.nowPlaying = res.results;
+    //   this.loader = false;
+    //   console.log(this.nowPlaying);
       
-      // tem.forEach(e=>{
-      //   if(e.original_language.toLowerCase()=="hi"){
-      //     this.nowPlaying.push(e);
-      //   }
-      // })
-      // | filtermovies : 'HI': 'original_language' 
+    // });
+    let temp:any;
+    this.movies.getDiscoverMovie(page,"release_date.desc",true,false,"hi%7Cmr").subscribe((res:any)=>{
+      this.nowPlaying=this.nowPlaying.concat(res.results);
+      this.loader=false;
       console.log(this.nowPlaying);
       
-    });
+    })
   }
 
   tvShow(page: number) {
-    this.tv.getTvOnTheAir(page).pipe(delay(2000)).subscribe((res: any) => {
-      this.tvShows = res.results;
-      this.loader = false;
-      this.both = { ...this.nowPlaying,  ...this.tvShows};
+    // this.tv.getTvOnTheAir(page).pipe(delay(2000)).subscribe((res: any) => {
+    //   this.tvShows = res.results;
+    //   this.loader = false;
+    //  console.log(this.tvShows);
      
-    });
+    // });
+    this.tv.getDiscoverTVShow(page,"first_air_date.desc","hi%7Cmr",2022).subscribe((res:any)=>{
+      this.tvShows=this.tvShows.concat(res.results);
+
+      this.loader=false;
+      console.log(this.tvShows);
+      
+    })
   }
 }

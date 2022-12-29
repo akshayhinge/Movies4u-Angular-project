@@ -4,7 +4,7 @@
     </div>
     <app-skeleton *ngIf="loader"></app-skeleton>
     <div class="row" *ngIf="!loader">
-        <div class="col-md-2 listing__items" *ngFor="let movie of moviesGenre | slice:0:18">
+        <div class="col-md-2 listing__items" *ngFor="let movie of moviesGenre | filtermovies : 'en' :'original_language' | sort : 'release_date' : false ">
             <div [routerLink]="['/movies/', movie.id]">
                 <div class="listing-item-style">
                     <div class="overlay">
@@ -19,6 +19,5 @@
                 </div>
             </div>
         </div>
-    </div>
-    
+    </div>    
 </div>

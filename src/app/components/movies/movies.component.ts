@@ -38,18 +38,25 @@ export class MoviesComponent implements OnInit {
 
   ngOnInit() {
     this.getTopRatedMovies(1);
+
   }
 
+
   getTopRatedMovies(page: number) {
-    this.movieService.getPopular(page).pipe(delay(2000)).subscribe((res: any) => {
+    // this.movieService.getPopular(page).pipe(delay(2000)).subscribe((res: any) => {
+    //   this.topRated=res.results;
+
+    //   this.totalResults = res.total_results;
+    //   console.log("total"+ this.totalResults);
+    //   this.loader = false;
+    // },error => console.log(error));
+    this.movieService.getDiscoverMovie(page,"popularity.desc",true,true,"hi%7Cmr").subscribe((res:any)=>{
       this.topRated=res.results;
-      
-      
       this.totalResults = res.total_results;
-      console.log("total"+ this.totalResults);
       this.loader = false;
-    },
-    error => console.log(error));
+    })
+
+
   }
 
   changePage(event) {
@@ -58,9 +65,12 @@ export class MoviesComponent implements OnInit {
   }
 
   searchMovies() {
-    this.movieService.searchMovies(this.searchStr).subscribe(res => {
-      this.searchRes = res.results;
-    });
+    // this.movieService.searchMovies(this.searchStr).subscribe(res => {
+    //   this.searchRes = res.results;
+    // });
+    this.movieService.multisearch(1,this.searchStr,false).subscribe((res:any)=>
+    this.searchRes= res.results
+    );
   }
 
 

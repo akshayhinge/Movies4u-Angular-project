@@ -38,8 +38,7 @@ export class HomeComponent implements OnInit {
         breakpoint: '560px',
         numVisible: 3,
         numScroll: 1,
-        showIndicators:false,
-        showNavigators:false
+        
       }
     ];
   }

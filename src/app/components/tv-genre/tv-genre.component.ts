@@ -11,7 +11,7 @@ import { TvService } from 'src/app/service/tv.service';
 })
 export class TvGenreComponent implements OnInit {
   totalResults:number;
-  _tv: Object;
+  _tv: any;
   title: string;
   loader:boolean=true;
   public id: number;

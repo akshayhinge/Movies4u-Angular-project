@@ -25,6 +25,9 @@
         box-shadow: 1px 5px 9px 0px #ff0a0a;
         border-radius: 10px;
     }
+    @media (max-width: $breakpoint-xsmall){
+      margin: 0.4rem .4rem;
+    }
 }
 .mt_{
   margin: 10rem 5rem 10rem;

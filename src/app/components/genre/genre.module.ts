@@ -16,6 +16,7 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     GenreRoutingModule,
     PipeModule,
     SkeletonModule,
+    MatPaginatorModule,
     MatPaginatorModule
   ]
 })

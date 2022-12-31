@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TvService } from 'src/app/service/tv.service';
 import { delay } from 'rxjs/internal/operators/delay';
+import { MoviesService } from 'src/app/service/movies.service';
 
 
 @Component({
@@ -18,7 +19,7 @@ export class TvShowsComponent implements OnInit {
   searchStr: string;
 
   constructor(
-    private tvService: TvService
+    private tvService: TvService,private movieservice:MoviesService
   ) {
     this.responsiveOptions = [
       {
@@ -44,12 +45,17 @@ export class TvShowsComponent implements OnInit {
   }
 
   TopRatedTVShows(page: number) {
-    this.tvService.getTopRatedTVShows(page).pipe(delay(2000)).subscribe((res: any) => {
-      this.topRatedTv = res.results;
+    // this.tvService.getTopRatedTVShows(page).pipe(delay(2000)).subscribe((res: any) => {
+    //   this.topRatedTv = res.results;
+    //   this.totalResults = res.total_results;
+    //   this.loader = false;
+    // },
+    // error => console.log(error));
+    this.tvService.getDiscoverTVShow(page,"popularity.desc","hi%7Cmr","","2022").subscribe((res:any)=>{
+      this.topRatedTv=res.results;
       this.totalResults = res.total_results;
       this.loader = false;
-    },
-    error => console.log(error));
+    })
   }
 
   changePage(event) {
@@ -58,7 +64,7 @@ export class TvShowsComponent implements OnInit {
   }
 
   searchMovies() {
-    this.tvService.searchtv(this.searchStr).subscribe(res => {
+    this.movieservice.multisearch(1,this.searchStr,true).subscribe(res => {
       this.searchRes = res.results;
     });
   }

@@ -17,6 +17,9 @@ import { SkeletonModule } from 'src/app/shared/skeleton/skeleton.module';
     GenreListRoutingModule,
     MatButtonModule,
     SkeletonModule
+  ],
+  exports:[
+    GenreListComponent
   ]
 })
 export class GenreListModule { }

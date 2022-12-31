@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MoviesService } from 'src/app/service/movies.service';
 import { delay } from 'rxjs/internal/operators/delay';
 
@@ -9,7 +9,8 @@ import { delay } from 'rxjs/internal/operators/delay';
   styleUrls: ['./genre-list.component.scss']
 })
 export class GenreListComponent implements OnInit {
-
+  @Input() ShowMovieGenreList= false;
+  @Input() ShowTVGenreList= false;
   genreslist: any;
   loader = true;
 
@@ -22,7 +23,7 @@ export class GenreListComponent implements OnInit {
   }
 
   MovieGenre() {
-    this._movie.getGenres().pipe(delay(2000)).subscribe((res: any) => {
+    this._movie.getGenres().subscribe((res: any) => {
       this.genreslist = res.genres;
       this.loader = false;
     });

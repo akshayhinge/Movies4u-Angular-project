@@ -1,0 +1,68 @@
+<div class="listing">
+
+
+<div class="container-fluid mt-20 mb-20" >
+    <app-skeleton *ngIf="iconsloader"></app-skeleton>
+    <div class="row">
+        <div class="col-md-12 text-center" *ngIf="!iconsloader">
+            <h2 class="mb-5 mt-5">Watch Providers</h2>
+            <div class="list">
+                <button pButton *ngFor="let providers of providersList | slice : 0:41"  (click)="providersShows(providers.provider_id)" pTooltip="{{providers.provider_name}}"tooltipPosition="top" class="logo">
+                    <img src="https://image.tmdb.org/t/p/w370_and_h556_bestv2/{{providers?.logo_path}}" alt="" >
+                    <!-- <button mat-raised-button color="primary" class="genre-card blue-theme" aria-label="Providers">
+                        {{providers.provider_name}}
+                    </button> -->
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-skeleton *ngIf="contentloader "></app-skeleton>
+<div class="row" *ngIf="!contentloader">
+    <div class="col-md-2 col-6 listing__items" *ngFor="let i=index;let item of shows  | slice:0:18 | sort :'first_air_date':false | sort :'release_date':false; ">
+        
+
+            <div [routerLink]="['/movies/', item.id]" *ngIf="i>10 ;else istv">
+                <div class="listing-item-style">
+                    <div class="overlay">
+                        <div class="hover"><i class="material-icons">download</i> DOWNLOAD</div>
+                    </div>
+                    <img *ngIf="item?.poster_path"
+                        src="https://image.tmdb.org/t/p/w370_and_h556_bestv2/{{item?.poster_path}}"
+                        [alt]="item.title ? item.title : item.name">
+                    <img *ngIf="!item?.poster_path" src="assets/images/default-movie.png"
+                        [alt]="item.title ? item.title : item.name">
+                    <h6>{{ item?.name }}{{item?.original_title}}{{i}}</h6>
+                    <p class="rate"><i class="material-icons">star</i><span>{{item?.vote_average}}</span> /10</p>
+                    <p class="year"><span>{{item?.first_air_date | date: 'yyyy'}}{{item?.release_date | date: 'yyyy'}}</span>
+                    </p>
+                </div>
+            </div>
+        
+        <ng-template #istv>
+
+            <div [routerLink]="['/tv/', item.id]">
+                <div class="listing-item-style">
+                    <div class="overlay">
+                        <div class="hover"><i class="material-icons">download</i> DOWNLOAD</div>
+                    </div>
+                    <img *ngIf="item?.poster_path"
+                        src="https://image.tmdb.org/t/p/w370_and_h556_bestv2/{{item?.poster_path}}"
+                        [alt]="item.title ? item.title : item.name">
+                    <img *ngIf="!item?.poster_path" src="assets/images/default-movie.png"
+                        [alt]="item.title ? item.title : item.name">
+                    <h6>{{ item?.name }}{{item?.original_title}}</h6>
+                    <p class="rate"><i class="material-icons">star</i><span>{{item?.vote_average}}</span> /10</p>
+                    <p class="year"><span>{{item?.first_air_date | date: 'yyyy'}}{{item?.release_date | date: 'yyyy'}}</span>
+                    </p>
+                </div>
+            </div>
+        </ng-template>
+      
+    </div>
+</div>
+<mat-paginator *ngIf="totalResults" [length]="totalResults" [pageSize]="20" (page)="changePage($event)"></mat-paginator>
+
+</div>

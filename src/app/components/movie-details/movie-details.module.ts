@@ -26,6 +26,7 @@ import { PipeModule } from 'src/app/pipe/pipe.module';
     MatDialogModule,
     MatIconModule,
     CarouselModule
+    
   ],
 
 })

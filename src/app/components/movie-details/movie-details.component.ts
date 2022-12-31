@@ -4,6 +4,7 @@ import { ActivatedRoute , Params} from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material';
 import { AppMovieDialogComponent } from '../movie-details/app-movie-dialog/app-movie-dialog.component';
+import { delay } from 'rxjs/internal/operators/delay';
 
 @Component({
   selector: 'app-movie-details',
@@ -17,9 +18,9 @@ export class MovieDetailsComponent implements OnInit {
   baseUrl = 'https://www.youtube.com/embed/';
   autoplay = '?rel=0;&autoplay=1&mute=0';
   relatedvideo: any;
-  casts: any = [];
+  // casts: any = [];
   backdrops: any = [];
-  recomendMovies: any = [];
+  recomendMovies: any;
   responsiveOptions;
 
 
@@ -53,9 +54,10 @@ export class MovieDetailsComponent implements OnInit {
       this.id = params['id'];
       this.getSingleMoviesVideos(this.id);
       this.getSingleMoviesDetails(this.id);
-      this.getCast(this.id);
+      // this.getCast(this.id);
       this.getBackropsImages(this.id);
-      this.getRecomendMovie(this.id);
+      // this.getRecomendMovie(this.id);
+      this.getSimilerMovies(this.id);
     });
   }
 
@@ -83,11 +85,11 @@ export class MovieDetailsComponent implements OnInit {
     });
   }
   
-  getCast(id) {
-    this.movieService.getMovieCredits(id).subscribe((res: any) => {
-      this.casts = res.cast;
-    });
-  }
+  // getCast(id) {
+  //   this.movieService.getMovieCredits(id).subscribe((res: any) => {
+  //     this.casts = res.cast;
+  //   });
+  // }
 
   getBackropsImages(id) {
     this.movieService.getBackdropsImages(id).subscribe((res: any) => {
@@ -96,8 +98,17 @@ export class MovieDetailsComponent implements OnInit {
   }
 
   getRecomendMovie(id) {
-    this.movieService.getRecomendMovies(id).subscribe((res: any) => {
+    this.movieService.getRecomendMovies(id).pipe(delay(2000)).subscribe((res: any) => {
       this.recomendMovies = res.results;
+      console.log(this.recomendMovies);
+      
+    });
+  }
+  getSimilerMovies(id) {
+    this.movieService.getSimilerMovies(id).pipe(delay(2000)).subscribe((res: any) => {
+      this.recomendMovies = res.results;
+      console.log(this.recomendMovies);
+      
     });
   }
  

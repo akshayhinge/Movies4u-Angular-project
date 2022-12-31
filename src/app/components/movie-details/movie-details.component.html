@@ -179,31 +179,42 @@
                     </div>
                 </mat-tab>
                 <mat-tab label="Download">
-                    <div class="listing-space backdrop_">
-                        <!-- <div class="head">
-                            <h2 class="title">Backdrops</h2>
-                        </div> -->
-                        <!-- <div class="items">
-                            <div class="item backdrop_" *ngFor="let backdrop of backdrops | slice :0:16">
-                                <div class="image">
-                                    <img class="lazyload" src="https://image.tmdb.org/t/p/w533_and_h300_bestv2/{{ backdrop?.file_path }}">
-                                </div>
-                            </div>
-                        </div> -->
+                    <div class="listing-space">
+                        
+                        <div class="options text-center">
+                            <div class="1080p">
+                                <h1 class="linkTitle">Hindi + English 1080p</h1>
+                                <h1 class="link">
+                                    <a >link</a>
 
-                        <div class="options">
-                            
+                                </h1>
+                            </div>
+                            <div class="720p">
+                                <h1 class="linkTitle">720p</h1>
+                                <h1 class="link">
+                                    <a >link</a>
+
+                                </h1>
+                            </div>
+                            <div class="480p">
+                                <h1 class="linkTitle">480p</h1>
+                                <h1 class="link">
+
+                                    <a >link</a>
+                                </h1>
+                            </div>
+
                         </div>
                     </div>
                 </mat-tab>
             </mat-tab-group>
 
 
-            <div class="listing-space mt-20 mb-5">
+             <div class="listing-space mt-20 mb-5"> 
                 <div class="listing__head">
                     <h2 class="listing__title">Recommended Movies</h2>
                 </div>
-                <p-carousel [value]="recomendMovies" [numVisible]="6" [numScroll]="1" [circular]="true" [responsiveOptions]="responsiveOptions">
+                <p-carousel [value]="recomendMovies" [numVisible]="6" [numScroll]="1" [circular]="false" [responsiveOptions]="responsiveOptions">
                     <ng-template let-recomend pTemplate="item">
                         <div class="listing-item-style" [routerLink]="['/movies/', recomend.id]">
                             <div class="overlay">
@@ -219,7 +230,8 @@
                         </div>
                     </ng-template>
                 </p-carousel>
-            </div>
+            </div> 
+       
         </div>
     </div>
 </div>

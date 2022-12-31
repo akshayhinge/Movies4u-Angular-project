@@ -15,8 +15,7 @@ export class AppComponent {
   color: ThemePalette = 'warn';
   mode: ProgressSpinnerMode = 'indeterminate';
   value = 50;
-
-
+  
   constructor(private router: Router) {
     router.events.subscribe(event => {
       if (event instanceof NavigationStart) {

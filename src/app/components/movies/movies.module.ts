@@ -11,7 +11,7 @@ import { FormsModule } from '@angular/forms';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
-
+import { GenreListModule } from '../genre-list/genre-list.module';
 
 
 @NgModule({
@@ -26,7 +26,9 @@ import {MatIconModule} from '@angular/material/icon';
     FormsModule,
     MatFormFieldModule,
     MatInputModule,
-    MatIconModule
+    MatIconModule,
+    GenreListModule
+    
   ],
   declarations: [
     MoviesComponent,

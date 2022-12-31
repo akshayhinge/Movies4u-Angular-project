@@ -1,6 +1,6 @@
 
 
-<div class="container-fluid mt-20 mb-20">
+<div class="container-fluid mt-20 mb-20" *ngIf="ShowMovieGenreList">
     <app-skeleton *ngIf="loader"></app-skeleton>
     <div class="row">
         <div class="col-md-12 text-center" *ngIf="!loader">
@@ -14,7 +14,7 @@
     </div>
 </div>
 
-<div class="container-fluid mt-20 mb-20">
+<div class="container-fluid mt-20 mb-20" *ngIf="ShowTVGenreList">
     <app-skeleton *ngIf="loader"></app-skeleton>
     <div class="row">
         <div class="col-md-12 text-center" *ngIf="!loader">

@@ -19,8 +19,11 @@ export class TvService {
     this.language = 'en-HI';
     this.region = 'IN';
   }
-  getDiscoverTVShow(page:number,sort_by:string,language:string,year:number):Observable<any>{
-    return this.http.get(`${this.baseUrl}discover/tv?api_key=${this.apiKey}&language=${this.language}&sort_by=${sort_by}&first_air_date_year=${year}&page=${page}&include_null_first_air_dates=false&with_original_language=${language}&watch_region=${this.region}`);
+  getWatchProviders():Observable<any>{
+    return this.http.get(`${this.baseUrl}watch/providers/tv?api_key=${this.apiKey}&language=${this.language}&watch_region=${this.region}`);
+  }
+  getDiscoverTVShow(page:number,sort_by:string,language:string,provider?:string,year?:string):Observable<any>{
+    return this.http.get(`${this.baseUrl}discover/tv?api_key=${this.apiKey}&language=${this.language}&sort_by=${sort_by}&first_air_date_year=${year}&page=${page}&include_null_first_air_dates=false&with_watch_providers=${provider}&with_original_language=${language}&watch_region=${this.region}`);
   }
   getTvOnTheAir(page: number): Observable<any> {
     return this.http.get(`${this.baseUrl}tv/on_the_air?api_key=${this.apiKey}&page=${page}&language=${this.language}`);
@@ -58,8 +61,8 @@ export class TvService {
     return this.http.get(`${this.baseUrl}genre/tv/list?api_key=${this.apiKey}&language=${this.language}`);
   }
 
-  getTVShowByGenre(id: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}discover/tv?api_key=${this.apiKey}&language=en-US&sort_by=popularity.desc&page=1&timezone=America%2FNew_York&with_genres=${id}&include_null_first_air_dates=false`);
+  getTVShowByGenre(page:number,genreId: string,language:string,sort_by:string): Observable<any> {
+    return this.http.get(`${this.baseUrl}discover/tv?api_key=${this.apiKey}&language=${this.language}&sort_by=${sort_by}&page=${page}&with_genres=${genreId}&with_original_language=${language}&watch_region=${this.region}`);
   }
 
   getRecomendTv(id: string) {

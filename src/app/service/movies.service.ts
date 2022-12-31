@@ -19,8 +19,8 @@ export class MoviesService {
     this.region = 'IN';
   }
 
-  getDiscoverMovie(page:number,sort_by:string,adult:boolean,video:boolean,language:string):Observable<any>{
-    return this.http.get(`${this.baseUrl}discover/movie?api_key=${this.apiKey}&language=${this.language}&region=${this.region}&sort_by=${sort_by}&include_adult=${adult}&include_video=${video}&page=${page}&primary_release_year=2022&with_original_language=${language}&watch_region=${this.region}`);
+  getDiscoverMovie(page:number,sort_by:string,adult:boolean,video:boolean,language:string,provider?:string,year?:string,):Observable<any>{
+    return this.http.get(`${this.baseUrl}discover/movie?api_key=${this.apiKey}&language=${this.language}&region=${this.region}&sort_by=${sort_by}&include_adult=${adult}&include_video=${video}&page=${page}&primary_release_year=${year}&with_watch_providers=${provider}&with_original_language=${language}&watch_region=${this.region}`);
   }
   getNowPlaying(page: number): Observable<any> {
     // tslint:disable-next-line: max-line-length
@@ -57,8 +57,8 @@ export class MoviesService {
     return this.http.get(`${this.baseUrl}genre/movie/list?api_key=${this.apiKey}&language=${this.language}`);
   }
 
-  getMoviesByGenre(id: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}genre/${id}/movies?api_key=${this.apiKey}`);
+  getMoviesByGenre(page:number,genreId: string,language:string,adult:boolean,sort_by:string): Observable<any> {
+    return this.http.get(`${this.baseUrl}discover/movie?api_key=${this.apiKey}&language=${this.language}&sort_by=${sort_by}&include_adult=${adult}&page=${page}&with_genres=${genreId}&with_original_language=${language}&watch_region=${this.region}`);
   }
 
   getMovie(id: string): Observable<any> {
@@ -82,9 +82,11 @@ export class MoviesService {
   }
 
   getRecomendMovies(id: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}movie/${id}/recommendations?api_key=${this.apiKey}`);
+    return this.http.get(`${this.baseUrl}movie/${id}/recommendations?api_key=${this.apiKey}&language=${this.language}`);
   }
-
+  getSimilerMovies(movieId:string):Observable<any>{
+    return this.http.get(`${this.baseUrl}/movie/${movieId}/similar?api_key=${this.apiKey}&language=${this.language}`);
+  }
   getPersonDetail(id: string): Observable<any> {
     return this.http.get(`${this.baseUrl}person/${id}?api_key=${this.apiKey}`);
   }

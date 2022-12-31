@@ -8,6 +8,7 @@ import { PipeModule } from 'src/app/pipe/pipe.module';
 import { SkeletonModule } from 'src/app/shared/skeleton/skeleton.module';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { FormsModule } from '@angular/forms';
+import { GenreListModule } from '../genre-list/genre-list.module';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { FormsModule } from '@angular/forms';
     CarouselModule,
     SkeletonModule,
     MatPaginatorModule,
-    FormsModule
+    FormsModule,
+    GenreListModule
   ],
   declarations: [
     TvShowsComponent,

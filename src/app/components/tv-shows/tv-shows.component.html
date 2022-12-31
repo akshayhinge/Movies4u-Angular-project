@@ -1,3 +1,4 @@
+<app-genre-list [ShowTVGenreList]="true"></app-genre-list>
 <div class="listing">
     <div class="listing__head">
         <h3 class="listing__title">TV Shows</h3>
@@ -23,11 +24,11 @@
     <ng-container *ngIf="searchRes">
         <app-skeleton *ngIf="loader"></app-skeleton>
         <div class="row" *ngIf="!loader">
-            <div class="col-md-2 listing__items" *ngFor="let item of searchRes | slice:0:18">
-                <div [routerLink]="['/tv/', item.id]">
+            <div class="col-md-2 col-6 listing__items" *ngFor="let item of searchRes | slice:0:18">
+                <div [routerLink]="['/tv/', item.id]" *ngIf="item.media_type=='tv'">
                     <div class="listing-item-style">
                         <div class="overlay">
-                            <div class="hover"><i class="material-icons">play_arrow</i> PLAY NOW</div>
+                            <div class="hover"><i class="material-icons">download</i> Download</div>
                         </div>
                         <img *ngIf="item?.poster_path"
                             src="https://image.tmdb.org/t/p/w370_and_h556_bestv2/{{item?.poster_path}}"
@@ -40,17 +41,33 @@
                         </p>
                     </div>
                 </div>
+                <div [routerLink]="['/movies/', item.id]" *ngIf="item.media_type=='movie'">
+                    <div class="listing-item-style">
+                        <div class="overlay">
+                            <div class="hover"><i class="material-icons">download</i> Download</div>
+                        </div>
+                        <img *ngIf="item?.poster_path"
+                            src="https://image.tmdb.org/t/p/w370_and_h556_bestv2/{{item?.poster_path}}"
+                            [alt]="item.title ? item.title : item.name">
+                        <img *ngIf="!item?.poster_path" src="assets/images/default-movie.png"
+                            [alt]="item.title ? item.title : item.name">
+                        <h6>{{ item?.title }}</h6>
+                        <p class="rate"><i class="material-icons">star</i><span>{{item?.vote_average}}</span> /10</p>
+                        <p class="year"><span>{{item?.release_date | date: 'yyyy'}}</span>
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
     </ng-container>
 
     <app-skeleton *ngIf="loader"></app-skeleton>
     <div class="row" *ngIf="!loader">
-        <div class="col-md-2 listing__items" *ngFor="let item of topRatedTv | slice:0:18">
+        <div class="col-md-2  col-6 listing__items" *ngFor="let item of topRatedTv | slice:0:18 | sort : 'first_air_date':false">
             <div [routerLink]="['/tv/', item.id]">
                 <div class="listing-item-style">
                     <div class="overlay">
-                        <div class="hover"><i class="material-icons">play_arrow</i> PLAY NOW</div>
+                        <div class="hover"><i class="material-icons">download</i> Download</div>
                     </div>
                     <img *ngIf="item?.poster_path"
                         src="https://image.tmdb.org/t/p/w370_and_h556_bestv2/{{item?.poster_path}}"

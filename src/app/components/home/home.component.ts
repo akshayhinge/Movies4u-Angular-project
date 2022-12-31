@@ -45,10 +45,10 @@ export class HomeComponent implements OnInit {
   }
   ngOnInit() {
  
-      this.trendingMovies(2);
+      // this.trendingMovies(2);
       this.trendingMovies(1);
     this.tvShow(1);
-    this.tvShow(2);
+    // this.tvShow(2);
   }
 
   trendingMovies(page: number) {
@@ -59,10 +59,10 @@ export class HomeComponent implements OnInit {
       
     // });
     let temp:any;
-    this.movies.getDiscoverMovie(page,"release_date.desc",true,false,"hi%7Cmr").subscribe((res:any)=>{
+    this.movies.getDiscoverMovie(page,"release_date.desc",true,false,"hi%7Cmr","","2022").subscribe((res:any)=>{
       this.nowPlaying=this.nowPlaying.concat(res.results);
       this.loader=false;
-      console.log(this.nowPlaying);
+      // console.log(this.nowPlaying);
       
     })
   }
@@ -74,11 +74,11 @@ export class HomeComponent implements OnInit {
     //  console.log(this.tvShows);
      
     // });
-    this.tv.getDiscoverTVShow(page,"first_air_date.desc","hi%7Cmr",2022).subscribe((res:any)=>{
+    this.tv.getDiscoverTVShow(page,"first_air_date.desc","hi%7Cmr").subscribe((res:any)=>{
       this.tvShows=this.tvShows.concat(res.results);
 
       this.loader=false;
-      console.log(this.tvShows);
+      // console.log(this.tvShows);
       
     })
   }

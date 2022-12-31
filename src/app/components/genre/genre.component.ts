@@ -12,6 +12,7 @@ export class GenreComponent implements OnInit {
   moviesGenre: any;
   title: string;
   public id: number;
+  totalResults:number;
   loader = true;
 
   constructor(
@@ -23,15 +24,20 @@ export class GenreComponent implements OnInit {
     this.router.params.subscribe((params: Params) => {
       this.id = params['id'];
       this.title = params['name'];
-      this.getMoviesGenre(this.id);
+      this.getMoviesGenre(1,this.id);
     });
   }
 
-  getMoviesGenre(id) {
-    this.movieService.getMoviesByGenre(id).pipe(delay(2000)).subscribe((res: any) => {
+  getMoviesGenre(page,id) {
+    this.movieService.getMoviesByGenre(page,id,"hi%7Cen",true,"popularity.desc").subscribe((res: any) => {
         this.moviesGenre = res.results;
+        this.totalResults=res.total_results;
         this.loader = false;
     });
+  }
+  changePage(event) {
+    this.getMoviesGenre(event.pageIndex + 1 ,this.id);
+    // this.loader = false;
   }
 
 }

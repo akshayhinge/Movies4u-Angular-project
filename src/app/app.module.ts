@@ -18,6 +18,8 @@ import { SkeletonModule } from './shared/skeleton/skeleton.module';
 import {ButtonModule} from 'primeng/button';
 import { WatchProvidersListComponent } from './components/watch-providers-list/watch-providers-list.component';
 import { ProvidersListModule } from './components/watch-providers-list/providers-list.module';
+import { AdminComponent } from './components/admin/admin.component';
+import { AdminModule } from './components/admin/admin.module';
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,6 +27,7 @@ import { ProvidersListModule } from './components/watch-providers-list/providers
     SliderComponent,
     HomeComponent,
     FooterComponent,
+
   ],
 
   imports: [
@@ -40,7 +43,8 @@ import { ProvidersListModule } from './components/watch-providers-list/providers
     MatProgressBarModule,
     SkeletonModule,
     ButtonModule,
-    ProvidersListModule
+    ProvidersListModule,
+
     
   ],
 

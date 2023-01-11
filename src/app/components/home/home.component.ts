@@ -1,8 +1,9 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, NgZone, OnInit, ViewEncapsulation } from '@angular/core';
 import { MoviesService } from 'src/app/service/movies.service';
 import { TvService } from 'src/app/service/tv.service';
 import { delay } from 'rxjs/internal/operators/delay';
 import { concat } from 'rxjs';
+import { Carousel } from 'primeng/carousel';
 
 @Component({
   selector: 'app-home',
@@ -17,10 +18,17 @@ export class HomeComponent implements OnInit {
   responsiveOptions;
   loader = true;
 
+  
   constructor(
     private movies: MoviesService,
-    private tv: TvService
-  ) {
+    private tv: TvService,public el:ElementRef,
+    public zone: NgZone
+    ) {
+    // super(el,zone);
+    Carousel.prototype.onTouchMove = () => { }
+    Carousel.prototype.changePageOnTouch = (e,diff) => {} 
+    Carousel.prototype.onDotClick=()=>{}
+    Carousel.prototype.onTouchStart=()=>{}
     this.responsiveOptions = [
       {
         breakpoint: '1024px',

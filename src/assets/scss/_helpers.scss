@@ -118,6 +118,7 @@
   margin: 0.2em;
   color: #fff8f8;
   transition: color 0.2s;
+ 
   border: solid 2px rgba(255, 255, 255, 80%) !important;
   
   &:focus {
@@ -125,9 +126,9 @@
     box-shadow: 0 0 0 0.1em #ff8d8d !important;
   }
 
-  @media (max-width: $breakpoint-xsmall) {
-    display: none;
-  }
+  // @media (max-width: $breakpoint-xsmall) {
+  //   display: none;
+  // }
 }
 
 .ui-carousel-content,
@@ -141,10 +142,12 @@ body .ui-sidebar {
 }
 
 body .pi {
-  font-size: 3rem;
+  font-size: 1.5rem;
   color: $text-color;
 }
-
+body .ui-button{
+  // font-size: 1rem !important;
+}
 .ui-sidebar-top {
   height: 5em;
 }

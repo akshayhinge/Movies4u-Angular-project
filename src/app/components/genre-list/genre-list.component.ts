@@ -25,6 +25,8 @@ export class GenreListComponent implements OnInit {
   MovieGenre() {
     this._movie.getGenres().subscribe((res: any) => {
       this.genreslist = res.genres;
+      console.log(this.genreslist);
+      
       this.loader = false;
     });
   }

@@ -7,6 +7,10 @@ const routes: Routes = [
     path: '',
     component: HomeComponent,
   },
+  {
+    path : 'admin',
+    loadChildren:() => import('./components/admin/admin.module').then(mod => mod.AdminModule)
+  },
 
   {
     path: 'movies',

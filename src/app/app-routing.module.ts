@@ -11,6 +11,14 @@ const routes: Routes = [
     path : 'admin',
     loadChildren:() => import('./components/admin/admin.module').then(mod => mod.AdminModule)
   },
+  {
+    path : 'admin/download',
+    loadChildren:() => import('./components/admin-download/admin-download.module').then(mod => mod.AdminDownloadModule)
+  },
+  {
+    path : 'admin/movies',
+    loadChildren:() => import('./components/admin-movies/admin-movies.module').then(mod => mod.AdminMoviesModule)
+  },
 
   {
     path: 'movies',

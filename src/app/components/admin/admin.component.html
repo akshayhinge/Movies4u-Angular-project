@@ -23,7 +23,8 @@
                 <div class="form-group">
                     <div class="input-group justify-content-end">
                         <button type="button" class="btn btn-success fs-5 p-3 mr-0" (click)="showAddGenreDialog()">Add Genre</button>
-                        <button type="button" class=" btn btn-primary fs-5 p-3" (click)=" showAddDownloadDialog()">Add Download</button>
+                        <button type="button" class=" btn btn-primary fs-5 p-3" [routerLink]="['/admin/download']">Download</button>
+                        <button type="button" class=" btn btn-primary fs-5 p-3" [routerLink]="['/admin/movies']">Movies</button>
 
                     </div>
                     </div>
@@ -39,7 +40,7 @@
                     <div class="listing-item-style">
                         <div class="overlay">
                             <div class="hover">
-                                <button type="button" pButton class="p-button-danger"  (click)="showDialog(movie)" icon="pi pi-check" label="Add"></button>
+                                <button type="button" pButton class="p-button-danger"  (click)="showAddMovieDialog(movie)" icon="pi pi-check" label="Add"></button>
                             </div>
                         </div>
                         <img *ngIf="movie?.poster_path" src="https://image.tmdb.org/t/p/w370_and_h556_bestv2/{{movie?.poster_path}}"
@@ -56,7 +57,7 @@
                     <div class="listing-item-style">
                         <div class="overlay">
                             <div class="hover">
-                                <button type="button" pButton class="p-button-danger"  (click)="showDialog(movie)" icon="pi pi-check" label="Add"></button>
+                                <button type="button" pButton class="p-button-danger"  (click)="showAddMovieDialog(movie)" icon="pi pi-check" label="Add"></button>
                             </div>
                         </div>
                         <img *ngIf="movie?.poster_path" src="https://image.tmdb.org/t/p/w370_and_h556_bestv2/{{movie?.poster_path}}"
@@ -81,14 +82,14 @@
                     <div class="overlay">
                         <div class="hover">
                             <!-- <i class="material-icons">download</i> Download -->
-                            <button type="button" pButton class="p-button-danger"  (click)="showDialog(movie)" icon="pi pi-check" label="Add"></button>
+                            <button type="button" pButton class="p-button-danger"  (click)="showAddMovieDialog(movie)" icon="pi pi-check" label="Add"></button>
                         </div>
                     </div>
                     <img src="https://image.tmdb.org/t/p/w370_and_h556_bestv2/{{movie?.poster_path}}"
                         [alt]="movie.title ? movie.title : movie.name">
                     <img *ngIf="!movie?.poster_path" src="assets/images/default-movie.png"
                         [alt]="movie.title ? movie.title : movie.name">
-                    <h6>{{ movie?.title }}</h6>
+                    <h6>{{ movie?.title }}{{movie?.original_title}}</h6>
                     <p class="rate"><i class="material-icons">star</i><span>{{movie?.vote_average}}</span> /10</p>
                     <p class="year"><span>{{movie?.release_date | date: 'yyyy'}}</span>
                     </p>
@@ -102,27 +103,30 @@
     
 </div>
 <p-dialog header="Genre"   [maximizable]="true" [(visible)]="addGenreDisplay">
-    {{selectdGenre.value  |json}}
-    <form (ngSubmit)="onGenreSubmit(selectdDownload)" #selectdGenre="ngForm" novalidate>
-        <!-- Movies id -->
+    {{selectedGenre.value  |json}}
+    <form (ngSubmit)="onGenreSubmit(selectedGenre)" #selectedGenre="ngForm" novalidate>
+        <!-- Movies genre-->
         <div class="form-outline mb-4 mr-4">
-            <label for="nameinput" class="form-label"><strong>Movie Title</strong></label>
-            <input type="text" pInputText value="{{movie?.title}}{{movie?.name}}" [(ngModel)]="selectdDownload.name" id="nameinput" class="form-control"
-           name="movieName"
-            #movieName="ngModel"
+            <label for="nameinput" class="form-label"><strong>Movie Genre</strong></label>
+            <input type="text" pInputText  [(ngModel)]="selectedGenre.name" id="nameinput" class="form-control"
+           name="name"
+            #movieGenre="ngModel"
                 required="" />
             
         </div>
+        <button type="submit" pButton label="Submit"  [disabled]="selectedGenre.invalid" class="p-button-danger mr-4"></button>
+        <button type="reset" pButton label="Reset"  ></button>
     </form>
 </p-dialog>
 <p-dialog header="Movie"   [maximizable]="true" [(visible)]="addDownloadDisplay">
     {{selectdDownload.value  |json}}
-    <form (ngSubmit)="onDownloadSubmit(selectdDownload)" #selectdDownload="ngForm" novalidate>
+    <form (ngSubmit)="onDownloadSubmit(selectdDownload,movie.id)" #selectdDownload="ngForm" novalidate>
         <!-- Movies id -->
         <div class="form-outline mb-4 mr-4">
             <label for="priceinput" class="form-label"><strong>Movie ID</strong></label>
             <input type="number"  pInputText value="{{movie?.id}}" 
-            [(ngModel)]="selectedMovieID" name="movieID"
+           
+             name="movieID" ngModel
              id="priceinput" class="form-control" 
                 />
             
@@ -130,25 +134,26 @@
         <!-- Movies name -->
         <div class="form-outline mb-4 mr-4">
             <label for="nameinput" class="form-label"><strong>Movie Title</strong></label>
-            <input type="text" pInputText value="{{movie?.title}}{{movie?.name}}" [(ngModel)]="selectdDownload.name" id="nameinput" class="form-control"
-           name="movieName"
-            #movieName="ngModel"
+            <input type="text" pInputText 
+             id="nameinput" class="form-control"
+           name="name" ngModel
+           
                 required="" />
             
         </div>
         <!-- Movies language -->
         <div class="form-outline mb-4 mr-4">
             <label for="nameinput" class="form-label"><strong>Movie language</strong></label>
-            <input type="text" pInputText id="nameinput" class="form-control" [(ngModel)]="selectedDownload.language"
-               name="movieLanguage"
+            <input type="text" pInputText id="languageinput" class="form-control" 
+               name="language" ngModel
                 required="" />
             
         </div>
         <!-- Movies download link -->
         <div class="form-outline mb-4 mr-4">
             <label for="nameinput" class="form-label"><strong>Movie download link </strong></label>
-            <input type="text" pInputText  id="nameinput" class="form-control"  ngModel
-               name="movieDownloadLink"
+            <input type="text" pInputText  id="downloadLinkinput" class="form-control"  ngModel
+               name="download_link"
                 required="" />
             
         </div>
@@ -157,124 +162,119 @@
         <button type="reset" pButton label="Reset"  ></button>
     </form>
 </p-dialog>
-<p-dialog header="Movie"   [maximizable]="true" [(visible)]="display">
-    {{selectedMovie | json}}
+<p-dialog header="Movie"   [maximizable]="true" [(visible)]="addMovieDisplay">
+    {{selectedMovie.value | json}}
 
-    <form [formGroup]="addmovieform" 
-                    class="row g-3 needs-validation" [ngClass]="addmovieform.touched? 'was-validated' : '' ">
+    <form (ngSubmit)="onMovieSubmit(selectedMovie)" #selectedMovie="ngForm" novalidate>
+                    
                     <div class="inputboxes d-flex flex-wrap"> 
                         
                         <!--movie id   input -->
-                        <!-- <div class="form-outline mb-4 mr-4">
+                        <div class="form-outline mb-4 mr-4">
                             <label for="priceinput" class="form-label"><strong>Movie ID</strong></label>
-                            [(ngModel)]="selectedMovie.moviesID" 
-                            <input type="number"  pInputText value="{{movie.id}}"
-                              id="priceinput" class="form-control" formControlName="price"
-                                [ngStyle]="{'border-color': price && price.invalid && price.touched ? '#fe8686': null }"
-                                required="" />
-                            <span *ngIf="price && price.invalid && price.touched " style="color: #ff0000;">
-                                Price is required</span>
-                        </div> -->
+                            <input type="number"  pInputText value="{{movie?.id}}"
+                              id="priceinput" class="form-control" [ngModel]="moviesID.value"
+                                required="" name="moviesID" #moviesID/>
+                        </div>
                         <!-- Movie Title  input -->
-                        <!-- <div class="form-outline mb-4 mr-4">
+                        <div class="form-outline mb-4 mr-4">
                             <label for="nameinput" class="form-label"><strong>Movie Title</strong></label>
-                            <input type="text" pInputText value="{{movie.title}}{{movie?.name}}" id="nameinput" class="form-control" formControlName="name"
-                                [ngStyle]="{'border-color': name && name.invalid && name.touched ? '#fe8686': null }"
-                                required="" />
-                            <span *ngIf="name && name.invalid && name.touched" style=" color: #ff0000;">movie name is
-                                required</span>
-                        </div> -->
+                            <input type="text" pInputText value="{{movie?.title}}{{movie?.name}}" id="nameinput" 
+                            class="form-control" 
+                            name="original_title" [ngModel]="original_title.value" #original_title
+                            required="" />
+                            <!-- [(ngModel)]="selectedMovie.original_title"  -->
+                            
+                        </div>
                         
                        
                         <!-- movie Genre  input -->
                         <!-- <div class="form-outline mb-4 mr-4 d-flex flex-column">
                             <label for="categoryinput" class="form-label"><strong>Movie Genre</strong> </label>
 
-                            <p-multiSelect [options]="genrename" [(ngModel)]="selectedGenre" defaultLabel="Select a Genre" optionLabel="name" selectedItemsLabel="{0} items selected"></p-multiSelect>
+                            <p-multiSelect [options]="genrename"  [(ngModel)]="selectedGenre" optionValue="name"  defaultLabel="Select a Genre" optionLabel="name" selectedItemsLabel="{0} items selected"></p-multiSelect>
                             
                         </div> -->
-                        <!-- movie poster  path input -->
-                        <!-- <div class="form-outline mb-4 mr-4">
+                        <!-- movie poster path input -->
+                        <div class="form-outline mb-4 mr-4">
                             <label for="productimg" class="form-label">poster_path</label>
-                            <input type="text" id="productimg" pInputText value="{{movie.poster_path}}" class="form-control" formControlName="productimg" 
-                                [ngStyle]="{'border-color': productimg && productimg.invalid && productimg.touched ? '#fe8686': null }"
-                                required="" />
-                                <span *ngIf="productimg && productimg.invalid && productimg.touched "
-                                style="color: #ff0000;">
-                                 Image path is required</span>
-                        </div> -->
-                         <!-- movie backdrop path  path input -->
+                            <input type="text" id="productimg" pInputText value="{{movie?.poster_path}}" class="form-control" 
+                            [ngModel]="poster_path.value" name="poster_path" #poster_path
+                            required="" />
+                                
+                        </div>
+                         <!-- movie backdrop path  input -->
                         <!-- <div class="form-outline mb-4 mr-4">
                             <label for="productimg" class="form-label">backdrop_path</label>
                             <input type="text" id="productimg" pInputText value="{{movie.backdrop_path}}" class="form-control" formControlName="productimg" 
-                                [ngStyle]="{'border-color': productimg && productimg.invalid && productimg.touched ? '#fe8686': null }"
-                                required="" />
-                                <span *ngIf="productimg && productimg.invalid && productimg.touched "
-                                style="color: #ff0000;">
-                                 Image path is required</span>
+                                [(ngModel)]="selectedMovie"
+                            required="" />
+                                
                         </div> -->
-                         <!-- movie original_language path  path input -->
-                        <!-- <div class="form-outline mb-4 mr-4">
+                         <!-- movie original_language   input -->
+                        <div class="form-outline mb-4 mr-4">
                             <label for="productimg" class="form-label">original_language</label>
-                            <input type="text" id="productimg" pInputText value="{{movie.original_language}}" class="form-control" formControlName="productimg" 
-                                [ngStyle]="{'border-color': productimg && productimg.invalid && productimg.touched ? '#fe8686': null }"
-                                required="" />
-                                <span *ngIf="productimg && productimg.invalid && productimg.touched "
-                                style="color: #ff0000;">
-                                 Image path is required</span>
-                        </div> -->
-                         <!-- movie release_date path  path input -->
+                            <input type="text" id="productimg" pInputText value="{{movie?.original_language}}" class="form-control" 
+                            [ngModel]="original_language.value" #original_language name="original_language"
+                            required="" />
+                               
+                        </div>
                         <!-- <div class="form-outline mb-4 mr-4">
+                            <label for="productimg" class="form-label">origin_country</label>
+                            <input type="text" id="productimg" pInputText value="{{movie?.origin_country}}" class="form-control" 
+                            [ngModel]="origin_country.value" #origin_country name="origin_country"
+                            required="" />
+                               
+                        </div> -->
+
+
+                         <!-- movie release_date  input -->
+                        <div class="form-outline mb-4 mr-4">
                             <label for="productimg" class="form-label">release_date</label>
-                            <input type="date" id="productimg" pInputText value="{{movie?.release_date}}{{movie?.first_air_date}}" class="form-control" formControlName="productimg" 
-                                [ngStyle]="{'border-color': productimg && productimg.invalid && productimg.touched ? '#fe8686': null }"
-                                required="" />
-                                <span *ngIf="productimg && productimg.invalid && productimg.touched "
-                                style="color: #ff0000;">
-                                 Image path is required</span>
-                        </div> -->
-                         <!-- movie vote_average path  path input -->
-                        <!-- <div class="form-outline mb-4 mr-4">
+                            <input type="date" id="productimg" pInputText value="{{movie?.release_date}}{{movie?.first_air_date}}" class="form-control"  
+                            [ngModel]="release_date.value" #release_date name="release_date"
+                            required="" />
+                                
+                        </div>
+                         <!-- movie vote_average   input -->
+                        <div class="form-outline mb-4 mr-4">
                             <label for="productimg" class="form-label">vote_average</label>
-                            <input type="number" id="productimg" pInputText value="{{movie.vote_average}}" class="form-control" formControlName="productimg" 
-                                [ngStyle]="{'border-color': productimg && productimg.invalid && productimg.touched ? '#fe8686': null }"
-                                required="" />
-                                <span *ngIf="productimg && productimg.invalid && productimg.touched "
-                                style="color: #ff0000;">
-                                 Image path is required</span>
-                        </div> -->
-                         <!-- movie vote_count path  path input -->
-                        <!-- <div class="form-outline mb-4 mr-4">
+                            <input type="number" id="productimg" pInputText value="{{movie?.vote_average}}" class="form-control" 
+                            [ngModel]="vote_average.value" #vote_average name="vote_average"
+                            required="" />
+                        </div>
+                        <!-- movie popularity -->
+                        <div class="form-outline mb-4 mr-4">
+                            <label for="productimg" class="form-label">popularity</label>
+                            <input type="number" id="productimg" pInputText value="{{movie?.popularity}}" class="form-control" 
+                            [ngModel]="popularity.value"  #popularity name="popularity"
+                            required="" />
+                        </div>
+                         <!-- movie vote_count  input -->
+                        <div class="form-outline mb-4 mr-4">
                             <label for="productimg" class="form-label">vote_count</label>
-                            <input type="number" id="productimg" pInputText value="{{movie.vote_count}}" class="form-control" formControlName="productimg" 
-                                [ngStyle]="{'border-color': productimg && productimg.invalid && productimg.touched ? '#fe8686': null }"
-                                required="" />
-                                <span *ngIf="productimg && productimg.invalid && productimg.touched "
-                                style="color: #ff0000;">
-                                 Image path is required</span>
-                        </div> -->
+                            <input type="number" id="productimg" pInputText value="{{movie?.vote_count}}" class="form-control" 
+                            [ngModel]="vote_count.value" #vote_count name="vote_count"
+                            required="" />
+                                
+                        </div>
                          <!-- movie overview -->
-                         <!-- <div class="form-outline mb-4 w-100">
+                         <div class="form-outline mb-4 w-100">
                             <label for="descinput" class="form-label"><strong>Movie overview </strong></label>
-                            <textarea  type="text" [autoResize]="true" pInputTextarea  value="{{movie.overview}}" id="descinput" class="form-control" formControlName="desc"
-                                [ngStyle]="{'border-color': desc && desc.invalid && desc.touched ? '#fe8686': null }"
-                                required=""></textarea>
-                            <span *ngIf="desc && desc.invalid && desc.touched " style="color: #ff0000;">
-                                description is required</span>
-                        </div> -->
+                            <textarea  type="text" [autoResize]="true" pInputTextarea  value="{{movie?.overview}}" id="descinput" class="form-control" 
+                            [ngModel]="overview.value" #overview name="overview"
+                            required=""></textarea>
+                            
+                        </div>
                     </div>
 
                     <!-- modal footer -->
                     <div class="modal-footer">
-                        <p-button icon="pi pi-times" (click)="display=false" label="Close" styleClass="p-button-text"></p-button>
-                        <button  class="btn btn-success" value="Add movie"
-                            [disabled]="addmovieform.invalid" *ngIf="!isupdatebtncall" (click)="confirmAdd()" >
-                            <div class="spinner-border spinner-border-sm " role="status" *ngIf="spinnerbtn"></div>Add Cuisine</button>
-                        <button class="btn btn-success" value="update movie"
-                          
-                        [disabled]="addmovieform.invalid" *ngIf="isupdatebtncall" data-bs-toggle="modal" data-bs-target="#confirmationmodel">Update Cuisine</button>
-                        <ng-template pTemplate="footer">
-                        </ng-template>
+                        <p-button icon="pi pi-times" (click)="addMovieDisplay=false" label="Close" styleClass="p-button-text"></p-button>
+                        <p-button icon="pi pi-times"  label="Reset" type="reset" ></p-button>
+                        <p-button icon="pi pi-times" [disabled]="selectedMovie.invalid"  type="submit" label="Add" ></p-button>
+                        
+                       
                     </div>
                 </form>
 

@@ -5,6 +5,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material';
 import { AppMovieDialogComponent } from '../movie-details/app-movie-dialog/app-movie-dialog.component';
 import { delay } from 'rxjs/internal/operators/delay';
+import { AdminService } from 'src/app/service/admin.service';
 
 @Component({
   selector: 'app-movie-details',
@@ -22,13 +23,15 @@ export class MovieDetailsComponent implements OnInit {
   backdrops: any = [];
   recomendMovies: any;
   responsiveOptions;
-
+  downloads:any[]=[];
+  comments:any[]=[];
 
   constructor(
     private movieService: MoviesService,
     private router: ActivatedRoute,
     private sanitizer: DomSanitizer,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private admin:AdminService
   ) {
     this.responsiveOptions = [
       {
@@ -54,10 +57,13 @@ export class MovieDetailsComponent implements OnInit {
       this.id = params['id'];
       this.getSingleMoviesVideos(this.id);
       this.getSingleMoviesDetails(this.id);
+      this.getMovieComments(this.id);
       // this.getCast(this.id);
       this.getBackropsImages(this.id);
       // this.getRecomendMovie(this.id);
       this.getSimilerMovies(this.id);
+      this.getDownloadLinks(this.id);
+
     });
   }
 
@@ -68,9 +74,38 @@ export class MovieDetailsComponent implements OnInit {
       
     });
   }
+  getMovieComments(id:any){
+
+    this.admin.getMovieCommentBymovieID(id).subscribe((e:any)=>{
+      console.log(e);
+      this.comments=e;
+      
+    })
+  }
+
+  onCommentFormSubmit(commentForm:any){
+    commentForm.date=new Date();
+    if(!commentForm.username){
+      commentForm.username="UNKNOWN";
+    }
+
+    
+
+    console.log(commentForm.date);
+    
+    this.admin.addMovieCommentBymovieID(this.id,commentForm).subscribe(e=>{
+      console.log(e);
+      
+      
+    })
+    // console.log(commentForm.username);
+    // console.log(commentForm);
+    
+    
+  }
 
   getSingleMoviesVideos(id) {
-    this.movieService.getMovieVideos(id).subscribe((res: any) => {
+    this.movieService.getMovieVideos(id).pipe(delay(2000)).subscribe((res: any) => {
       if (res.results.length) {
         this.video = res.results[0];
         this.relatedvideo = res.results;
@@ -94,7 +129,7 @@ export class MovieDetailsComponent implements OnInit {
   // }
 
   getBackropsImages(id) {
-    this.movieService.getBackdropsImages(id).subscribe((res: any) => {
+    this.movieService.getBackdropsImages(id).pipe(delay(2000)).subscribe((res: any) => {
       this.backdrops = res.backdrops;
     });
   }
@@ -112,6 +147,15 @@ export class MovieDetailsComponent implements OnInit {
       console.log(this.recomendMovies);
       
     });
+  }
+
+  getDownloadLinks(id){
+    this.admin.getMovieDownloadByMovieID(id).pipe(delay(2000)).subscribe((res:any)=>{
+      this.downloads=res;
+      console.log(this.downloads);
+      stop();
+    })
+    this.downloads=[];
   }
  
 }

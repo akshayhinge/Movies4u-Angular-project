@@ -1,5 +1,12 @@
 
-export const GenresList =
+interface Genre{
+    id:number;
+    name:String;
+}
+export class GenresList {
+
+    genres: Genre
+}
 [
     {
         "id": 28,

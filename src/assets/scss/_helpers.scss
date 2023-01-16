@@ -130,6 +130,21 @@
   //   display: none;
   // }
 }
+@media (max-width: 500px){
+  .ui-carousel-content .ui-button{
+    width: 5px;
+    content: normal;
+    border: 1rem solid; 
+    padding: 15% 0px;
+    margin: 0;
+    border-radius: 0% !important;
+
+    span{
+      display: none;
+    }
+  }
+
+}
 
 .ui-carousel-content,
 .ui-carousel-container {

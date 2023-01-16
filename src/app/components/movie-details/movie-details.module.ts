@@ -8,6 +8,10 @@ import { MatDialogModule, MatIconModule } from '@angular/material';
 import { AppMovieDialogComponent } from './app-movie-dialog/app-movie-dialog.component';
 import { CarouselModule } from 'primeng/carousel';
 import { PipeModule } from 'src/app/pipe/pipe.module';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { ButtonModule } from 'primeng/button';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -25,7 +29,11 @@ import { PipeModule } from 'src/app/pipe/pipe.module';
     MatTabsModule,
     MatDialogModule,
     MatIconModule,
-    CarouselModule
+    CarouselModule,
+    InputTextModule,
+    InputTextareaModule,
+    ButtonModule,
+    FormsModule
     
   ],
 

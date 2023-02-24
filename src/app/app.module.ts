@@ -16,7 +16,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { SkeletonModule } from './shared/skeleton/skeleton.module';
 import {ButtonModule} from 'primeng/button';
-import { ProvidersListModule } from './components/watch-providers-list/providers-list.module';
+import { ProvidersListModule } from './components/watch-providers-list/watch-providers-list.module';
+import { SearchModule } from './components/search/search.module';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,6 @@ import { ProvidersListModule } from './components/watch-providers-list/providers
     SliderComponent,
     HomeComponent,
     FooterComponent,
-
   ],
 
   imports: [
@@ -42,7 +42,7 @@ import { ProvidersListModule } from './components/watch-providers-list/providers
     SkeletonModule,
     ButtonModule,
     ProvidersListModule,
-
+    SearchModule
     
   ],
 

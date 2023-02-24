@@ -12,6 +12,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
 import { GenreListModule } from '../genre-list/genre-list.module';
+import { SearchModule } from '../search/search.module';
 
 
 @NgModule({
@@ -27,11 +28,15 @@ import { GenreListModule } from '../genre-list/genre-list.module';
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
-    GenreListModule
+    GenreListModule,
+    SearchModule
     
   ],
   declarations: [
     MoviesComponent,
+  ],
+  exports :[
+    MoviesComponent
   ]
 })
 export class MoviesModule {}

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MoviesService } from 'src/app/service/movies.service';
 import { delay } from 'rxjs/internal/operators/delay';
 
@@ -9,14 +9,20 @@ import { delay } from 'rxjs/internal/operators/delay';
 })
 export class MoviesComponent implements OnInit {
   
+ @Input() onlySearchingForm=false;
+
   topRated: any=[];
   responsiveOptions;
   loader = true;
   totalResults: any;
   total_results: any;
-  searchRes: any;
+  searchRes: any[]=[];
   searchStr: string;
 
+  totalSearchResults:any;
+  searchPaginator=false;
+  emptyMessage=false;
+  filterArray:String[] =[ "movie","tv"];
   constructor(private movieService: MoviesService) {
     this.responsiveOptions = [
       {
@@ -44,14 +50,10 @@ export class MoviesComponent implements OnInit {
 
 
   getTopRatedMovies(page: number) {
-    // this.movieService.getPopular(page).pipe(delay(2000)).subscribe((res: any) => {
-    //   this.topRated=res.results;
+    const currentDate = new Date();
+    const formattedDate = `${currentDate.getFullYear()}-${("0" + (currentDate.getMonth() + 1)).slice(-2)}-${("0" + currentDate.getDate()).slice(-2)}`;
 
-    //   this.totalResults = res.total_results;
-    //   console.log("total"+ this.totalResults);
-    //   this.loader = false;
-    // },error => console.log(error));
-    this.movieService.getDiscoverMovie(page,"popularity.desc",false,true,"hi%7Cmr","","2022").subscribe((res:any)=>{
+    this.movieService.getDiscoverMovie(page,"popularity.desc",false,false,"hi%7Cmr","",formattedDate).subscribe((res:any)=>{
       this.topRated=res.results;
       this.totalResults = res.total_results;
       this.loader = false;
@@ -64,14 +66,29 @@ export class MoviesComponent implements OnInit {
     this.loader = true;
     this.getTopRatedMovies(event.pageIndex + 1);
   }
+  changeSearchPage(event){
+    this.searchMovies(event.pageIndex + 1);
+  }
 
-  searchMovies() {
-    // this.movieService.searchMovies(this.searchStr).subscribe(res => {
-    //   this.searchRes = res.results;
-    // });
-    this.movieService.multisearch(1,this.searchStr,false).subscribe((res:any)=>
-    this.searchRes= res.results
-    );
+  searchMovies(page) {
+    this.searchRes=[];
+    this.totalSearchResults=0;
+    this.movieService.multisearch(page,this.searchStr,false).subscribe((res:any)=>{
+      
+      res.results.forEach(e=>{
+        this.filterArray.forEach(v=>{
+          if(e.media_type==v){
+            this.searchRes.push(e);
+          }
+        })
+      })
+      this.totalSearchResults = res.total_results;
+      if(this.totalSearchResults>=20){
+        this.searchPaginator=true;
+      }
+      this.emptyMessage=true;
+
+    });
   }
 
 

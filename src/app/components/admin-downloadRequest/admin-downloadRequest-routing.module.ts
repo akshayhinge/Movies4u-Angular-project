@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AdminDownloadComponent } from './admin-download.component';
+import { AdminDownloadRequestComponent } from './admin-downloadRequest.component';
 
 
 const routes: Routes = [
   {
     path: '',
-    component: AdminDownloadComponent
+    component: AdminDownloadRequestComponent
   }
 ];
 
@@ -14,4 +14,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class AdminDownloadRoutingModule { }
+export class AdminDownloadRequestRoutingModule { }

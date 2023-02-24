@@ -13,7 +13,10 @@ import {ButtonModule} from 'primeng/button';
 import {InputTextModule} from 'primeng/inputtext';
 import {InputTextareaModule} from 'primeng/inputtextarea';
 import {MultiSelectModule} from 'primeng/multiselect';
-
+import { ToastModule } from 'primeng/toast';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {ProgressSpinnerModule} from 'primeng/progressspinner';
+import { SearchModule } from '../search/search.module';
 @NgModule({
   declarations: [
     AdminComponent
@@ -29,14 +32,18 @@ import {MultiSelectModule} from 'primeng/multiselect';
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
-    DialogModule,
     ButtonModule,
     InputTextModule,
     FormsModule,
     ReactiveFormsModule,
     InputTextareaModule,
-    MultiSelectModule
-    
+    MultiSelectModule,
+    ToastModule,
+    ConfirmDialogModule,
+    DialogModule,
+    ProgressSpinnerModule,
+    SearchModule,
+    MatPaginatorModule    
   ],
   exports :[
     AdminComponent

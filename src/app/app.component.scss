@@ -12,3 +12,10 @@
     left: 50%;
     transform: translate(-50%, -50%);
   }
+  .mat-progress-bar{
+    position: fixed;
+    z-index: 2000;
+    height: 0.5rem;
+
+  }
+

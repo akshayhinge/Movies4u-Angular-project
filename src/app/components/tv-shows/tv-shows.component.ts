@@ -45,13 +45,10 @@ export class TvShowsComponent implements OnInit {
   }
 
   TopRatedTVShows(page: number) {
-    // this.tvService.getTopRatedTVShows(page).pipe(delay(2000)).subscribe((res: any) => {
-    //   this.topRatedTv = res.results;
-    //   this.totalResults = res.total_results;
-    //   this.loader = false;
-    // },
-    // error => console.log(error));
-    this.tvService.getDiscoverTVShow(page,"popularity.desc","hi%7Cmr","","2022").subscribe((res:any)=>{
+    const currentDate = new Date();
+    const formattedDate = `${currentDate.getFullYear()}-${("0" + (currentDate.getMonth() + 1)).slice(-2)}-${("0" + currentDate.getDate()).slice(-2)}`;
+  
+    this.tvService.getDiscoverTVShow(page,"popularity.desc","hi%7Cmr","",formattedDate).subscribe((res:any)=>{
       this.topRatedTv=res.results;
       this.totalResults = res.total_results;
       this.loader = false;

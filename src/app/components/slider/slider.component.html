@@ -1,14 +1,14 @@
 <div class="hero">
     <ng-container *ngFor="let slider of movies_data; let i = index">
         <div class="slider" *ngIf="current == i" @fade>
-            <div class="backdrop">
+            <div class="backdrop" [routerLink]="['/movies/', slider.id]">
                 <div class="lazyloaded">
                     <img alt="{{slider?.title}}" class="lazyload image" src="https://image.tmdb.org/t/p/original/{{slider?.backdrop_path}}">
                 </div>
             </div>
             <div class="pane">
                 <div>
-                    <h1 class="name" [routerLink]="['/movies/', slider.id]">
+                    <h1 class="name" >
                         {{slider?.title}}
                     </h1>
                     <div class="meta">

@@ -31,7 +31,7 @@ export class TvGenreComponent implements OnInit {
   }
 
   getTvByGenre(page,id) {
-    this.tvService.getTVShowByGenre(page,id,"hi%7Chi","popularity.desc").subscribe((res: any) => {
+    this.tvService.getTVShowByGenre(page,id,"hi%7Cmr","popularity.desc").subscribe((res: any) => {
         this._tv = res.results;
         this.totalResults=res.total_results;
         this.loader=false;

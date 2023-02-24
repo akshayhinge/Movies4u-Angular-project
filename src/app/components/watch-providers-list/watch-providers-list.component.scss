@@ -1,5 +1,11 @@
 @import '../../../assets/scss/variables';
+mat-paginator{
+  background: #212121;
+}
 
+mat-paginator{
+  color: #fff;
+}
 .genre-card {
   display: inline-block;
   margin: 14px 10px;
@@ -12,7 +18,7 @@
 .logo{
     width: 5rem;
     margin: 0rem 1rem;
-    margin-bottom: .5rem;
+    margin-bottom: 1rem;
     border: 0;
     padding: 0;
     border-radius: 10px;
@@ -28,6 +34,7 @@
     }
     @media (max-width: $breakpoint-xsmall){
       margin: 0.4rem .4rem;
+      width: 4rem;
     }
 }
 .mt_{
@@ -44,20 +51,4 @@
 .blue-theme {
   background-color: $secondary-color;
   border-radius: 1px;
-}
-mat-paginator{
-  background: #212121;
-}
-
-mat-paginator{
-  color: #fff;
-}
-
-
-.btnDesign{
-  height: 44px;
-  border-radius: 0;
-  width: 55px;
-  background: #dc4666;
-  border: #dc4666;
 }

@@ -32,7 +32,7 @@ export class SliderComponent implements OnInit {
   }
 
   getnowPlayingMovies(page: number) {
-    this.movieService.getNowPlaying(page).pipe(delay(2000)).subscribe((res: any) => {
+    this.movieService.getNowPlaying(page).pipe(delay(1000)).subscribe((res: any) => {
       this.movies_data = res.results;
     });
   }

@@ -59,33 +59,27 @@ export class HomeComponent implements OnInit {
   }
 
   trendingMovies(page: number) {
-    // this.movies.getNowPlaying(page).pipe(delay(2000)).subscribe((res: any) => {
-    //   this.nowPlaying = res.results;
-    //   this.loader = false;
-    //   console.log(this.nowPlaying);
-      
-    // });
+    const currentDate = new Date();
+    const formattedDate = `${currentDate.getFullYear()}-${("0" + (currentDate.getMonth() + 1)).slice(-2)}-${("0" + currentDate.getDate()).slice(-2)}`;
+
+    
     let temp:any;
-    this.movies.getDiscoverMovie(page,"release_date.desc",true,false,"hi%7Cmr","","2022").subscribe((res:any)=>{
-      this.nowPlaying=this.nowPlaying.concat(res.results);
+    this.movies.getDiscoverMovie(page,"release_date.desc",false,false,"hi%7Cmr","",formattedDate).subscribe((res:any)=>{
+      this.nowPlaying=res.results;
+      // this.nowPlaying=this.nowPlaying.concat(res.results);
       this.loader=false;
-      // console.log(this.nowPlaying);
-      
     })
   }
 
   tvShow(page: number) {
-    // this.tv.getTvOnTheAir(page).pipe(delay(2000)).subscribe((res: any) => {
-    //   this.tvShows = res.results;
-    //   this.loader = false;
-    //  console.log(this.tvShows);
-     
-    // });
-    this.tv.getDiscoverTVShow(page,"first_air_date.desc","hi%7Cmr").subscribe((res:any)=>{
-      this.tvShows=this.tvShows.concat(res.results);
+    const currentDate = new Date();
+    const formattedDate = `${currentDate.getFullYear()}-${("0" + (currentDate.getMonth() + 1)).slice(-2)}-${("0" + currentDate.getDate()).slice(-2)}`;
+  
+    this.tv.getDiscoverTVShow(page,"first_air_date.desc","hi%7Cmr","",formattedDate).subscribe((res:any)=>{
+      this.tvShows=res.results;
+      // this.tvShows=this.tvShows.concat(res.results);
 
       this.loader=false;
-      // console.log(this.tvShows);
       
     })
   }

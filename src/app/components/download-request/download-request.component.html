@@ -1,0 +1,37 @@
+<div class="listing-space mt-20 mb-5 " >
+    <div class="card p-2 p-md-5" style="background-color: #3e3e3e40;">
+        <div class="listing__head">
+            <h2 class="listing__title">Download Link Request</h2>
+        </div>
+        <div class="requestform">
+            <form #requestForm="ngForm" (ngSubmit)="onRequestFormSubmit(requestForm,requestForm.value)" novalidate>
+                <div class="card border-0 bg-black">
+                    <div class="card-body py-3 border-0 bg-black">
+                        <div class="d-flex flex-start w-100">
+                            <div class="form-outline w-100 d-flex flex-column ">
+                                
+                                <label for="username" class="block fs-5">Username</label>
+                                <input type="text" id="username" pInputText  placeholder="optional" name="username" ngModel class="mb-3 bg-black text-light" style="width: fit-content;">
+                                <textarea type="text" pInputTextarea  placeholder="Query*....  Also mention language and quality" rows="3" class="mb-3 bg-black text-light" name="requestQuery" ngModel required=""></textarea>
+                                <input type="text" hidden name="movieID" ngModel>
+                                <input type="text" hidden name="movieName" ngModel>
+                                <input type="text" hidden name="media_type" ngModel>
+                            </div>
+                        </div>
+                        <div class="float-end mt-2 pt-1">
+                            
+                            <button type="submit" pButton
+                             label="Send Request" [disabled]="requestForm.invalid">
+                               
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+        
+            </form>
+
+        </div>
+    </div>
+</div>
+<p-toast></p-toast>

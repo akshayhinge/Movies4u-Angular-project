@@ -1,0 +1,60 @@
+
+    <form>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="text" class="form-control searchdesign" placeholder="Search for movies..." [(ngModel)]="searchStr"
+                            name="searchStr" (keyup.enter)="searchMovies(1)">
+                        <span class="input-group-btn">
+                            <button class="btn btn-danger btnDesign" type="button" (click)="searchMovies(1)">Go!</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>    
+    </form>
+
+    <ng-container *ngIf="searchRes">
+        <app-skeleton *ngIf="loader"></app-skeleton>
+        <div class="row" *ngIf="!loader">
+            <div class="col-md-2 col-6 listing__items" *ngFor="let movie of searchRes | slice : 0:18 | sort :'release_date' :false  | sort : 'first_air_date':false ">
+                <div [routerLink]="['/movies/', movie.id]" *ngIf="movie.media_type=='movie'">
+                    <div class="listing-item-style">
+                        <div class="overlay">
+                            <div class="hover"><i class="material-icons">download</i> DOWNLOAD</div>
+                        </div>
+                        <img *ngIf="movie?.poster_path" src="https://image.tmdb.org/t/p/w370_and_h556_bestv2/{{movie?.poster_path}}"
+                            [alt]="movie.title ? movie.title : movie.name">
+                        <img *ngIf="!movie?.poster_path" src="assets/images/default-movie.png"
+                            [alt]="movie.title ? movie.title : movie.name">
+                        <h6>{{ movie?.title }}{{movie?.name}}</h6>
+                        <p class="rate"><i class="material-icons">star</i><span>{{movie?.vote_average}}</span> /10</p>
+                        <p class="year"><span>{{movie?.release_date | date: 'yyyy'}}{{movie?.first_air_date | date :'yyyy'}}</span>
+                        </p>
+                    </div>
+                </div>
+                <div [routerLink]="['/tv/', movie.id]" *ngIf="movie.media_type=='tv'">
+                    <div class="listing-item-style">
+                        <div class="overlay">
+                            <div class="hover"><i class="material-icons">download</i> DOWNLOAD</div>
+                        </div>
+                        <img *ngIf="movie?.poster_path" src="https://image.tmdb.org/t/p/w370_and_h556_bestv2/{{movie?.poster_path}}"
+                            [alt]="movie.title ? movie.title : movie.name">
+                        <img *ngIf="!movie?.poster_path" src="assets/images/default-movie.png"
+                            [alt]="movie.title ? movie.title : movie.name">
+                        <h6>{{ movie?.title }}{{movie?.name}}</h6>
+                        <p class="rate"><i class="material-icons">star</i><span>{{movie?.vote_average}}</span> /10</p>
+                        <p class="year"><span>{{movie?.release_date | date: 'yyyy'}}{{movie?.first_air_date | date :'yyyy'}}</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="emptyMessage mb-2" *ngIf="searchRes.length===0 && emptyMessage">
+                <h3>Result Not Found! [ Try searching by movie name only.]</h3>
+            </div>
+        </div>
+    </ng-container>
+    <mat-paginator *ngIf="searchPaginator" [length]="totalSearchResults" [pageSize]="20" (page)="changeSearchPage($event)"></mat-paginator>
+<hr>
+

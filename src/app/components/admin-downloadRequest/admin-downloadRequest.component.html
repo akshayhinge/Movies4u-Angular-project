@@ -1,0 +1,255 @@
+<p-table #dt1 [value]="requests" [rowHover]="true" dataKey="id" editMode="row" [rows]="10"
+    [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading" [paginator]="true"
+    [autoLayout]="true" styleClass="p-datatable-gridlines"
+    currentPageReportTemplate="Showing {{first}} to {{last}} of {{totalResults}} entries">
+
+    <ng-template pTemplate="caption">
+        <div class="flex">
+            <div> <button pButton type="button" icon="pi pi-arrow-left" class="p-button-rounded float-left"
+                    [routerLink]="['/admin/']"></button></div>
+            <h1>List Of requests</h1>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th pResizableColumn pSortableColumn="id">ID<p-sortIcon field="id"></p-sortIcon></th>
+            <th pResizableColumn pSortableColumn="date">Date<p-sortIcon field="date"></p-sortIcon></th>
+            <th pResizableColumn pSortableColumn="username">Username<p-sortIcon field="username"></p-sortIcon></th>
+            <th pResizableColumn pSortableColumn="imdbID">Movie ID<p-sortIcon field="imdbID"></p-sortIcon></th>
+            <th pResizableColumn pSortableColumn="id">Media Type<p-sortIcon field="media_type"></p-sortIcon></th>
+            <th pResizableColumn pSortableColumn="movieName">Movie Name<p-sortIcon field="movieName"></p-sortIcon></th>
+            <th pResizableColumn pSortableColumn="requestQuery">Request Query<p-sortIcon
+                    field="requestQuery"></p-sortIcon></th>
+            <th style="width: fit-content"></th>
+
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-request let-editing="editing" let-ri="rowIndex">
+        <tr [pEditableRow]="request">
+            <td>
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        {{request.id}}
+                        <!-- <input pInputText type="text" [(ngModel)]="request.id" disabled> -->
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{request.id}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+            <td>
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        {{request.date | date : 'short'}}
+                        <!-- <input pInputText type="text" [(ngModel)]="request.date" disabled> -->
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{request.date | date : 'short'}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+            <td>
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <input pInputText type="text" [(ngModel)]="request.username">
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{request.username}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+            <td>
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <input pInputText type="text" [(ngModel)]="request.movieID">
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{request.movieID}}
+                    </ng-template>
+                </p-cellEditor>
+
+            </td>
+            <td>
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <input pInputText type="text" [(ngModel)]="request.media_type">
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{request.media_type}}
+                    </ng-template>
+                </p-cellEditor>
+
+            </td>
+            <td>
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <input pInputText type="text" [(ngModel)]="request.movieName">
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{request.movieName}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+            <td>
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <input pInputText type="text" [(ngModel)]="request.requestQuery">
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{request.requestQuery}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+
+            <td>
+                <div class="flex align-items-center justify-content-center gap-2">
+                    <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times"
+                        class=" p-button-rounded p-button-text p-button-danger"></button>
+                    <button pButton type="button" class="m-2" (click)="showAddMovieDialog(request.movieID,request?.media_type)"
+                        icon="pi pi-check" label="add"></button>
+                    <button pButton pRipple [label]="Delete" icon="pi pi-trash" class="p-button-danger"
+                        (click)="onRequestDelete(request.id,ri)"></button>
+                </div>
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="paginatorright">
+        <p-button type="button" icon="pi pi-plus" (click)="getDownloadRequest(pageNo+1)" styleClass="p-button-text"
+            label="Add Page"></p-button>
+    </ng-template>
+</p-table>
+<p-dialog header="Movie" [maximizable]="true" [(visible)]="addDownloadDisplay">
+    <form (ngSubmit)="onDownloadSubmit(selectdDownload,movie.id)" #selectdDownload="ngForm" novalidate>
+        <!-- Movies id -->
+        <div class="form-outline mb-4 mr-4">
+            <label for="priceinput" class="form-label"><strong>Movie ID</strong></label>
+            <input type="number" pInputText value="{{movie?.id}}" name="movieID" ngModel id="priceinput"
+                class="form-control" />
+
+        </div>
+        <!-- Movies name -->
+        <div class="form-outline mb-4 mr-4">
+            <label for="nameinput" class="form-label"><strong>Download Quality</strong></label>
+            <input type="text" pInputText id="nameinput" class="form-control" name="name" ngModel required="" />
+
+        </div>
+        <!-- Movies language -->
+        <div class="form-outline mb-4 mr-4">
+            <label for="nameinput" class="form-label"><strong>Movie language</strong></label>
+            <input type="text" pInputText id="languageinput" class="form-control" name="language" ngModel required="" />
+
+        </div>
+        <!-- Movies download link -->
+        <div class="form-outline mb-4 mr-4">
+            <label for="nameinput" class="form-label"><strong>Movie download link </strong></label>
+            <input type="text" pInputText id="downloadLinkinput" class="form-control" ngModel name="download_link"
+                required="" />
+
+        </div>
+
+        <button type="submit" pButton label="Submit" [disabled]="selectdDownload.invalid"
+            class="p-button-danger mr-4"></button>
+        <button type="reset" pButton label="Reset"></button>
+    </form>
+</p-dialog>
+<p-dialog header="Movie" [maximizable]="true" [(visible)]="addMovieDisplay">
+    <form (ngSubmit)="onMovieSubmit(selectedMovie.value)" #selectedMovie="ngForm" novalidate>
+
+        <div class="inputboxes d-flex flex-wrap">
+
+            <!--movie id   input -->
+            <div class="form-outline mb-4 mr-4">
+                <label for="priceinput" class="form-label"><strong>Movie ID</strong></label>
+                <input type="number" pInputText value="{{movie?.id}}" id="priceinput" class="form-control"
+                    [ngModel]="moviesID.value" required="" name="moviesID" #moviesID />
+            </div>
+            <!--movie type   input -->
+            <div class="form-outline mb-4 mr-4">
+                <label for="priceinput" class="form-label"><strong>Media Type</strong></label>
+                <input type="text" pInputText value="{{movie?.media_type}}" id="priceinput" class="form-control"
+                    [ngModel]="media_type.value" required="" name="media_type" #media_type />
+            </div>
+            
+            <!-- Movie Title  input -->
+            <div class="form-outline mb-4 mr-4">
+                <label for="nameinput" class="form-label"><strong>Movie Title</strong></label>
+                <input type="text" pInputText value="{{movie?.title}}{{movie?.name}}" id="nameinput"
+                    class="form-control" name="original_title" [ngModel]="original_title.value" #original_title
+                    required="" />
+                <!-- [(ngModel)]="selectedMovie.original_title"  -->
+
+            </div>
+
+
+            <!-- movie Genre  input -->
+            <!-- <div class="form-outline mb-4 mr-4 d-flex flex-column">
+                            <label for="categoryinput" class="form-label"><strong>Movie Genre</strong> </label>
+
+                            <p-multiSelect [options]="genrename"  [(ngModel)]="selectedGenre" optionValue="name"  defaultLabel="Select a Genre" optionLabel="name" selectedItemsLabel="{0} items selected"></p-multiSelect>
+                            
+                        </div> -->
+            <!-- movie poster path input -->
+            <div class="form-outline mb-4 mr-4">
+                <label for="productimg" class="form-label">poster_path</label>
+                <input type="text" id="productimg" pInputText value="{{movie?.poster_path}}" class="form-control"
+                    [ngModel]="poster_path.value" name="poster_path" #poster_path required="" />
+
+            </div>
+
+            <!-- movie original_language   input -->
+            <div class="form-outline mb-4 mr-4">
+                <label for="productimg" class="form-label">original_language</label>
+                <input type="text" id="productimg" pInputText value="{{movie?.original_language}}" class="form-control"
+                    [ngModel]="original_language.value" #original_language name="original_language" required="" />
+
+            </div>
+
+            <!-- movie release_date  input -->
+            <div class="form-outline mb-4 mr-4">
+                <label for="productimg" class="form-label">release_date</label>
+                <input type="date" id="productimg" pInputText value="{{movie?.release_date}}{{movie?.first_air_date}}"
+                    class="form-control" [ngModel]="release_date.value" #release_date name="release_date" required="" />
+
+            </div>
+            <!-- movie vote_average   input -->
+            <div class="form-outline mb-4 mr-4">
+                <label for="productimg" class="form-label">vote_average</label>
+                <input type="number" id="productimg" pInputText value="{{movie?.vote_average}}" class="form-control"
+                    [ngModel]="vote_average.value" #vote_average name="vote_average" required="" />
+            </div>
+            <!-- movie popularity -->
+            <div class="form-outline mb-4 mr-4">
+                <label for="productimg" class="form-label">popularity</label>
+                <input type="number" id="productimg" pInputText value="{{movie?.popularity}}" class="form-control"
+                    [ngModel]="popularity.value" #popularity name="popularity" required="" />
+            </div>
+            <!-- movie vote_count  input -->
+            <div class="form-outline mb-4 mr-4">
+                <label for="productimg" class="form-label">vote_count</label>
+                <input type="number" id="productimg" pInputText value="{{movie?.vote_count}}" class="form-control"
+                    [ngModel]="vote_count.value" #vote_count name="vote_count" required="" />
+
+            </div>
+            <!-- movie overview -->
+            <div class="form-outline mb-4 w-100">
+                <label for="descinput" class="form-label"><strong>Movie overview </strong></label>
+                <textarea type="text" [autoResize]="true" pInputTextarea value="{{movie?.overview}}" id="descinput"
+                    class="form-control" [ngModel]="overview.value" #overview name="overview" required=""></textarea>
+
+            </div>
+        </div>
+        <!-- modal footer -->
+        <div class="modal-footer">
+
+            <p-button icon="pi pi-times" (click)="addMovieDisplay=false" label="Close"
+                styleClass="p-button-text"></p-button>
+            <p-button icon="pi pi-times" label="Reset" type="reset"></p-button>
+            <p-button icon="pi pi-check" class="" [disabled]="selectedMovie.invalid" type="submit"
+                label="Add"></p-button>
+        </div>
+    </form>
+</p-dialog>
+<p-confirmDialog [style]="{width: '50vw'}" rejectButtonStyleClass="p-button-text"></p-confirmDialog>
+<p-toast>
+</p-toast>
+<p-progressSpinner [style]="{width: '50px', height: '50px'}" *ngIf="spinnerActive"></p-progressSpinner>

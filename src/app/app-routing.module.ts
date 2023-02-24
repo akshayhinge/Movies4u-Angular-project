@@ -8,16 +8,29 @@ const routes: Routes = [
     component: HomeComponent,
   },
   {
+    path: 'movies/:id', 
+    loadChildren: () => import('./components/movie-details/movie-details.module').then(mod => mod.MovieDetailsModule)
+  },
+  {
+    path: 'tv/:id',
+    loadChildren: () => import('./components/tv-show-details/tv-show-details.module').then(mod => mod.TvShowDetailsModule)
+  },
+  {
     path : 'admin',
     loadChildren:() => import('./components/admin/admin.module').then(mod => mod.AdminModule)
   },
   {
-    path : 'admin/download',
-    loadChildren:() => import('./components/admin-download/admin-download.module').then(mod => mod.AdminDownloadModule)
+    path : 'admin/downloadrequest',
+    loadChildren:() => import('./components/admin-downloadRequest/admin-downloadRequest.module').then(mod => mod.AdminDownloadRequestModule)
   },
+
   {
     path : 'admin/movies',
     loadChildren:() => import('./components/admin-movies/admin-movies.module').then(mod => mod.AdminMoviesModule)
+  },
+  {
+    path : 'admin/tv',
+    loadChildren:() => import('./components/admin-tv/admin-tv.module').then(mod => mod.AdmintvModule)
   },
 
   {
@@ -25,19 +38,12 @@ const routes: Routes = [
     loadChildren: () => import('./components/movies/movies.module').then(mod => mod.MoviesModule)
   },
 
-  {
-    path: 'movies/:id', loadChildren: () => import('./components/movie-details/movie-details.module').then(mod => mod.MovieDetailsModule)
-  },
 
   {
     path: 'tv',
     loadChildren: () => import('./components/tv-shows/tv-shows.module').then(mod => mod.TvShowsModule)
   },
 
-  {
-    path: 'tv/:id',
-    loadChildren: () => import('./components/tv-show-details/tv-show-details.module').then(mod => mod.TvShowDetailsModule)
-  },
 
   {
     path: 'genres/:id/:name',
@@ -48,12 +54,6 @@ const routes: Routes = [
     path: 'genres',
     loadChildren: () => import('./components/genre-list/genre-list.module').then(mod => mod.GenreListModule)
   },
-
-  {
-    path: 'person/:id',
-    loadChildren: () => import('./components/person/person.module').then(mod => mod.PersonModule)
-  },
-
   {
     path: 'genres-tv/:id/:name',
     loadChildren: () => import('./components/tv-genre/tv-genre.module').then(m => m.TvGenreModule)

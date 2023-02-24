@@ -7,8 +7,9 @@ import { NumberWithCommasPipe } from './number-with-commas.pipe';
 import { CharacterWithCommasPipe } from './character-with-commas.pipe';
 import { NumberWithDoubleDigitsPipe } from './number-with-double-digits.pipe';
 import { FullLanguagePipe } from './full-language.pipe';
-import { FiltermoviesPipe } from './filtermovies.pipe';
+import { FilterPipe } from './filter.pipe';
 import { SortPipe } from './sort.pipe';
+import { SafePipe } from './safe.pipe';
 
 
 @NgModule({
@@ -20,8 +21,9 @@ import { SortPipe } from './sort.pipe';
     CharacterWithCommasPipe,
     NumberWithDoubleDigitsPipe,
     FullLanguagePipe,
-    FiltermoviesPipe,
-    SortPipe
+    FilterPipe,
+    SortPipe,
+    SafePipe
   ],
   exports: [
     ElipsisPipe,
@@ -31,7 +33,7 @@ import { SortPipe } from './sort.pipe';
     CharacterWithCommasPipe,
     NumberWithDoubleDigitsPipe,
     FullLanguagePipe,
-    FiltermoviesPipe,
+    FilterPipe,
     SortPipe
   ],
   imports: [

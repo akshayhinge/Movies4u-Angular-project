@@ -1,0 +1,443 @@
+<div class="card">
+    <p-table #dt1 [value]="tv" dataKey="id" editMode="row" [rows]="rows" [showCurrentPageReport]="true" [(first)]="first" 
+           [paginator]="true"   [showCurrentPageReport]="true"
+         [resizableColumns]="true" [autoLayout]="true" styleClass="p-datatable-gridlines"
+         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,20,50]">
+    
+        <ng-template pTemplate="caption">
+            <div class="flex">
+                <div> <button pButton type="button" icon="pi pi-arrow-left" class="p-button-rounded float-left" [routerLink]="['/admin/']"></button></div>
+                <h1>List Of TV Shows</h1>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th pResizableColumn></th>
+                <th  pResizableColumn pSortableColumn="id">ID<p-sortIcon field="id"></p-sortIcon></th>
+                <th pResizableColumn pSortableColumn="moviesID">TvShow ID<p-sortIcon field="tvshowID"></p-sortIcon></th>
+                <th pResizableColumn pSortableColumn="original_title">Tv Show Name<p-sortIcon
+                        field="original_title"></p-sortIcon> </th>
+                <th  pResizableColumn pSortableColumn="poster_path">poster path<p-sortIcon
+                        field="poster_path"></p-sortIcon></th>
+                <th pResizableColumn pSortableColumn="popularity">popularity<p-sortIcon
+                        field="popularity"></p-sortIcon></th>
+                <th pResizableColumn pSortableColumn="vote_average">vote average<p-sortIcon
+                        field="vote_average"></p-sortIcon></th>
+                <th pResizableColumn pSortableColumn="vote_count">vote count<p-sortIcon
+                        field="vote_count"></p-sortIcon></th>
+                <th pResizableColumn pSortableColumn="release_date">release date <p-sortIcon
+                        field="release_date"></p-sortIcon></th>
+                
+                <!-- <th >Comments</th> -->
+    
+                <th > 
+                 
+
+                    
+                </th>
+    
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-movie let-editing="editing" let-ri="rowIndex" let-expanded="expanded">
+            <tr [pEditableRow]="movie">
+                <td>
+                    <button type="button" pButton pRipple [pRowToggler]="movie"  class="p-button-text p-button-rounded p-button-plain mb-2" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                </td>
+                <td>
+                    {{movie.id}}
+                </td>
+                <td>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input pInputText type="text" style="width:100%"  [(ngModel)]="movie.tvshowID">
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{movie.tvshowID}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+               
+                <td>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input pInputText type="text" style="width:100%"  [(ngModel)]="movie.original_title">
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{movie.original_title}}
+                        </ng-template>
+                    </p-cellEditor>
+    
+                </td>
+                <td>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input pInputText type="text" style="width:100%"  [(ngModel)]="movie.poster_path">
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{movie.poster_path}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input pInputText type="text" style="width:100%"  [(ngModel)]="movie.popularity">
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{movie.popularity}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input pInputText type="text" style="width:100%"  [(ngModel)]="movie.vote_average">
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{movie.vote_average}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input pInputText type="text" style="width:100%"  [(ngModel)]="movie.vote_count">
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{movie.vote_count}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input pInputText type="datetime" style="width:100%" value="movie.release_date" [(ngModel)]="movie.release_date">
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{movie.release_date | date : "dd--MM--yyyy"}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td>
+                    <div class="flex align-items-center justify-content-center">
+                        <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"
+                             class="p-button-rounded p-button-text mb-2"></button>
+                        <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"
+                            (click)="onMovieRowEditSave(movie)"
+                            class="p-button-rounded p-button-text p-button-success mb-2"></button>
+                        <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times"
+                            class="p-button-rounded p-button-text p-button-danger mb-2"></button>
+                            <button pButton pRipple [label]="Delete" icon="pi pi-trash" class="p-button-danger" (click)="onMovieDelete(movie.id)" ></button>
+                        
+                           
+                        </div>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="rowexpansion" let-movie>
+            <tr>
+                <td colspan="12">
+                    <button (click)="onshowDownloads()" pButton label="show download"></button>&nbsp;
+                    <button (click)="onshowComments()" pButton label="show Comments"></button>
+                </td>
+            </tr>
+              
+            <tr *ngIf="showComments">
+                <td colspan="12">
+                        <p-table #dt1 [value]="movie.comments" dataKey="id" editMode="row" [autoLayout]="true" styleClass="p-datatable-gridlines">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th >ID</th>
+                                    <th >Date</th>
+                                    <th >User Name</th>
+                                    <th >Comment</th>
+                                    <th ></th>
+    
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-comment let-editing="editing" let-ri="rowIndex">
+                            <tr [pEditableRow]="comment">
+                                <td>
+                                    {{comment?.id}}
+                                </td>
+                                <td>
+                                    <p-cellEditor>
+                                        <ng-template pTemplate="input">
+                                            <input pInputText type="text" style="width:100%"  [(ngModel)]="comment.date">
+                                        </ng-template>
+                                        <ng-template pTemplate="output">
+                                            {{comment?.date | date : 'short'}}
+                                        </ng-template>
+                                    </p-cellEditor>
+                                </td>
+                                <td>
+                                    <p-cellEditor>
+                                        <ng-template pTemplate="input">
+                                            <input pInputText type="text" style="width:100%"  [(ngModel)]="comment.username">
+                                        </ng-template>
+                                        <ng-template pTemplate="output">
+                                            {{comment?.username}}
+                                        </ng-template>
+                                    </p-cellEditor>
+                                </td>
+                                <td>
+                                    <p-cellEditor>
+                                        <ng-template pTemplate="input">
+                                            <input pInputText type="text" style="width:100%"  [(ngModel)]="comment.comment">
+                                        </ng-template>
+                                        <ng-template pTemplate="output">
+                                            {{comment?.comment}}
+                                        </ng-template>
+                                    </p-cellEditor>
+    
+                                </td>
+                               
+    
+                                <td>
+                                    <div class="flex align-items-center justify-content-center gap-2">
+                                    
+                                            
+                                        <button pButton pRipple [label]="Delete" icon="pi pi-trash" class="p-button-danger" (click)="ondeleteSelectedComment(comment.id,ri)" ></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            </ng-template>
+                            <ng-template pTemplate="emptymessage">
+                                <tr>
+                                    <td colspan="12">There are no comments for this movie yet.</td>
+                                </tr>
+                               
+                            </ng-template>
+                       </p-table>            
+                </td>
+            </tr>
+                <tr *ngIf="showdownloads">
+                    <td colspan="12">
+                        
+                            <p-table #dt1 [value]="movie.downloads" dataKey="id" editMode="row" [autoLayout]="true" styleClass="p-datatable-gridlines">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th >ID</th>
+                                        <th >Download Quality </th>
+                                        <th >Language</th>
+                                        <th >Link</th>
+                                        <th > <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="openDownloadDialog(movie?.tvshowID)"></button></th>
+        
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-download let-editing="editing" let-ri="rowIndex">
+                                <tr [pEditableRow]="download">
+                                    <td>
+                                        {{download.id}}
+                                    </td>
+                                    <td>
+                                        <p-cellEditor>
+                                            <ng-template pTemplate="input">
+                                                <input pInputText type="text" style="width:100%"  [(ngModel)]="download.name">
+                                            </ng-template>
+                                            <ng-template pTemplate="output">
+                                                {{download.name}}
+                                            </ng-template>
+                                        </p-cellEditor>
+                                    </td>
+                                    <td>
+                                        <p-cellEditor>
+                                            <ng-template pTemplate="input">
+                                                <input pInputText type="text" style="width:100%"  [(ngModel)]="download.language">
+                                            </ng-template>
+                                            <ng-template pTemplate="output">
+                                                {{download.language}}
+                                            </ng-template>
+                                        </p-cellEditor>
+        
+                                    </td>
+                                    <td>
+                                        <p-cellEditor>
+                                            <ng-template pTemplate="input">
+                                                <input pInputText type="text" style="width:100%"  [(ngModel)]="download.download_link">
+                                            </ng-template>
+                                            <ng-template pTemplate="output">
+                                                {{download.download_link}}
+                                            </ng-template>
+                                        </p-cellEditor>
+                                    </td>
+        
+                                    <td>
+                                        <div class="flex align-items-center justify-content-center gap-2">
+                                            <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"
+                                                 class="p-button-rounded p-button-text mr-2"></button>
+                                            <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"
+                                                (click)="onDownloadRowEditSave(download.id,download)"
+                                                class="p-button-rounded p-button-text p-button-success mr-2"></button>
+                                            <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times"
+                                                class="p-button-rounded p-button-text p-button-danger mr-2"></button>
+                                                <button pButton pRipple [label]="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedDownload(download.id)"></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="emptymessage">
+                                    <tr>
+                                        <td colspan="5">There are no download for this movie yet.</td>
+                                        
+                                    </tr>
+                                   
+                                </ng-template>
+                           </p-table>
+                       
+                    </td>
+                </tr>
+        </ng-template>
+        <ng-template pTemplate="paginatorright">
+            <p-button type="button" icon="pi pi-plus" (click)="getSystemMovies(pageNo+1)" styleClass="p-button-text" label="Add Page"></p-button>
+        </ng-template>
+    </p-table>
+    <p-dialog header="Movie"   [maximizable]="true" [(visible)]="addMovieDisplay">
+        {{selectedMovie.value | json}}
+    
+        <form (ngSubmit)="onMovieSubmit(selectedMovie)" #selectedMovie="ngForm" novalidate>
+                        
+                        <div class="inputboxes d-flex flex-wrap"> 
+                            
+                            <!--movie id   input -->
+                            <div class="form-outline mb-4 mr-4">
+                                <label for="priceinput" class="form-label"><strong>Movie ID</strong></label>
+                                <input type="number"  pInputText value="{{movie?.id}}"
+                                  id="priceinput" class="form-control" [ngModel]="moviesID.value"
+                                    required="" name="moviesID" #moviesID/>
+                            </div>
+                            <!-- Movie Title  input -->
+                            <div class="form-outline mb-4 mr-4">
+                                <label for="nameinput" class="form-label"><strong>Movie Title</strong></label>
+                                <input type="text" pInputText value="{{movie?.title}}{{movie?.name}}" id="nameinput" 
+                                class="form-control" 
+                                name="original_title" [ngModel]="original_title.value" #original_title
+                                required="" />
+                                <!-- [(ngModel)]="selectedMovie.original_title"  -->
+                                
+                            </div>
+                            
+                           
+                            <!-- movie Genre  input -->
+                            <!-- <div class="form-outline mb-4 mr-4 d-flex flex-column">
+                                <label for="categoryinput" class="form-label"><strong>Movie Genre</strong> </label>
+    
+                                <p-multiSelect [options]="genrename"  [(ngModel)]="selectedGenre" optionValue="name"  defaultLabel="Select a Genre" optionLabel="name" selectedItemsLabel="{0} items selected"></p-multiSelect>
+                                
+                            </div> -->
+                            <!-- movie poster path input -->
+                            <div class="form-outline mb-4 mr-4">
+                                <label for="productimg" class="form-label">poster_path</label>
+                                <input type="text" id="productimg" pInputText value="{{movie?.poster_path}}" class="form-control" 
+                                [ngModel]="poster_path.value" name="poster_path" #poster_path
+                                required="" />
+                                    
+                            </div>
+
+                             <!-- movie original_language   input -->
+                            <div class="form-outline mb-4 mr-4">
+                                <label for="productimg" class="form-label">original_language</label>
+                                <input type="text" id="productimg" pInputText value="{{movie?.original_language}}" class="form-control" 
+                                [ngModel]="original_language.value" #original_language name="original_language"
+                                required="" />
+                                   
+                            </div>
+
+                             <!-- movie release_date  input -->
+                            <div class="form-outline mb-4 mr-4">
+                                <label for="productimg" class="form-label">release_date</label>
+                                <input type="date" id="productimg" pInputText value="{{movie?.release_date}}{{movie?.first_air_date}}" class="form-control"  
+                                [ngModel]="release_date.value" #release_date name="release_date"
+                                required="" />
+                                    
+                            </div>
+                             <!-- movie vote_average   input -->
+                            <div class="form-outline mb-4 mr-4">
+                                <label for="productimg" class="form-label">vote_average</label>
+                                <input type="number" id="productimg" pInputText value="{{movie?.vote_average}}" class="form-control" 
+                                [ngModel]="vote_average.value" #vote_average name="vote_average"
+                                required="" />
+                            </div>
+                            <!-- movie popularity -->
+                            <div class="form-outline mb-4 mr-4">
+                                <label for="productimg" class="form-label">popularity</label>
+                                <input type="number" id="productimg" pInputText value="{{movie?.popularity}}" class="form-control" 
+                                [ngModel]="popularity.value"  #popularity name="popularity"
+                                required="" />
+                            </div>
+                             <!-- movie vote_count  input -->
+                            <div class="form-outline mb-4 mr-4">
+                                <label for="productimg" class="form-label">vote_count</label>
+                                <input type="number" id="productimg" pInputText value="{{movie?.vote_count}}" class="form-control" 
+                                [ngModel]="vote_count.value" #vote_count name="vote_count"
+                                required="" />
+                                    
+                            </div>
+                             <!-- movie overview -->
+                             <div class="form-outline mb-4 w-100">
+                                <label for="descinput" class="form-label"><strong>Movie overview </strong></label>
+                                <textarea  type="text" [autoResize]="true" pInputTextarea  value="{{movie?.overview}}" id="descinput" class="form-control" 
+                                [ngModel]="overview.value" #overview name="overview"
+                                required=""></textarea>
+                                
+                            </div>
+                        </div>
+    
+                        <!-- modal footer -->
+                        <div class="modal-footer">
+                            <p-button icon="pi pi-times" (click)="addMovieDisplay=false" label="Close" styleClass="p-button-text"></p-button>
+                            <p-button icon="pi pi-times"  label="Reset" type="reset" ></p-button>
+                            <p-button icon="pi pi-times" [disabled]="selectedMovie.invalid"  type="submit" label="Add" ></p-button>
+                            
+                           
+                        </div>
+                    </form>
+
+    </p-dialog>
+    <p-dialog header="Movie"   [maximizable]="true" [(visible)]="displayDownloadDialog">
+        {{selectdDownload.value  |json}}
+        <form (ngSubmit)="onDownloadSubmit(selectdDownload.value)" #selectdDownload="ngForm" novalidate>
+            <!-- Movies id -->
+            <div class="form-outline mb-4 mr-4">
+                <label for="priceinput" class="form-label"><strong>Tv show ID</strong></label>
+                <input type="text"  pInputText value="{{tvshowID}}" 
+               
+                 name="tvshowID" ngModel
+                 id="priceinput" class="form-control" 
+                    />
+                
+            </div>
+            <!-- Movies name -->
+            <div class="form-outline mb-4 mr-4">
+                <label for="nameinput" class="form-label"><strong>Download Quality</strong></label>
+                <input type="text" pInputText 
+                 id="nameinput" class="form-control"
+               name="name" ngModel
+               
+                    required="" />
+                
+            </div>
+            <!-- Movies language -->
+            <div class="form-outline mb-4 mr-4">
+                <label for="nameinput" class="form-label"><strong>Movie language</strong></label>
+                <input type="text" pInputText id="languageinput" class="form-control" 
+                   name="language" ngModel
+                    required="" />
+                
+            </div>
+            <!-- Movies download link -->
+            <div class="form-outline mb-4 mr-4">
+                <label for="nameinput" class="form-label"><strong>Movie download link </strong></label>
+                <input type="text" pInputText  id="downloadLinkinput" class="form-control"  ngModel
+                   name="download_link"
+                    required="" />
+                
+            </div>
+    
+            <button type="submit" pButton label="Submit"  [disabled]="selectdDownload.invalid" class="p-button-danger mr-4"></button>
+            <button type="reset" pButton label="Reset"  ></button>
+        </form>
+    </p-dialog>
+    <p-toast></p-toast>
+       <p-confirmDialog [style]="{width: '50vw'}"  rejectButtonStyleClass="p-button-text"></p-confirmDialog>
+</div>

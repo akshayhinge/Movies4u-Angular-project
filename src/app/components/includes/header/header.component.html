@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light">
+<nav class="navbar navbar-expand-md navbar-light sticky-topl">
     <a class="navbar-brand" [routerLink]="['/']">M o v i e s 4 U </a>
     <ul class="navbar-nav ml-auto listMenu">
         <li class="nav-item active">
@@ -13,7 +13,7 @@
             <a class="nav-link" [routerLink]="['/tv']" routerLinkActive="router-link-active">TV Shows</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" [routerLink]="['/Dubbed_Movies']" routerLinkActive="router-link-active">Dubbed Movies</a>
+            <a class="nav-link" [routerLink]="['/Dubbed_Movies']" routerLinkActive="router-link-active">Others</a>
         </li>
     </ul>
     <span class="sidebar-nav-btn"  pButton icon="pi pi-plus" (click)="leftSidebar = true"><img src="assets/images/menu.svg"></span>
@@ -37,8 +37,8 @@
                 <a class="sidebar-nav-link" [routerLink]="['/tv']" routerLinkActive="router-link-active">TV Shows</a>
             </div>
             <div class="sidebarMenu genre_">
-                <img src="src/assets/images/tripod.svg">
-                <a class="sidebar-nav-link" [routerLink]="['/Dubbed_Movies']" routerLinkActive="router-link-active">Dubbed Movies</a>
+                <img src="assets/images/tripod.svg">
+                <a class="sidebar-nav-link" [routerLink]="['/Dubbed_Movies']" routerLinkActive="router-link-active">Others</a>
             </div>
         </div>
     </div>

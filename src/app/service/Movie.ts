@@ -1,4 +1,7 @@
 export class Movie {
+media_type: string='';
+  genres: any;
+
 
 
 constructor(
@@ -12,7 +15,7 @@ constructor(
     release_date:Date,
     vote_average:number=0,
     vote_count:number=0,
-    origin_country: String='',
+    media_type:String=''
 )
 {}
 

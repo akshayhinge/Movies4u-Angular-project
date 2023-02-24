@@ -12,12 +12,18 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ButtonModule } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
+import { ToastModule } from 'primeng/toast';
+import { MovieCommentsComponent } from '../movie-comments/movie-comments.component';
+import { DownloadRequestComponent } from '../download-request/download-request.component';
+import { DownloadRequestModule } from '../download-request/download-request.module';
+import { MovieCommentsModule } from '../movie-comments/movie-comments.module';
 
 
 @NgModule({
   declarations: [
     MovieDetailsComponent,
     AppMovieDialogComponent
+
   ],
   entryComponents: [
     AppMovieDialogComponent
@@ -33,7 +39,11 @@ import { FormsModule } from '@angular/forms';
     InputTextModule,
     InputTextareaModule,
     ButtonModule,
-    FormsModule
+    FormsModule,
+    ToastModule,
+    DownloadRequestModule,
+    MovieCommentsModule
+
     
   ],
 

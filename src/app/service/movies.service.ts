@@ -19,8 +19,8 @@ export class MoviesService {
     this.region = 'IN';
   }
 
-  getDiscoverMovie(page:number,sort_by:string,adult:boolean,video:boolean,language:string,provider?:string,year?:string,):Observable<any>{
-    return this.http.get(`${this.baseUrl}discover/movie?api_key=${this.apiKey}&language=${this.language}&region=${this.region}&sort_by=${sort_by}&include_adult=${adult}&include_video=${video}&page=${page}&primary_release_year=${year}&with_watch_providers=${provider}&with_original_language=${language}&watch_region=${this.region}`);
+  getDiscoverMovie(page:number,sort_by:string,adult:boolean,video:boolean,language:string,provider?:string,year?:any,):Observable<any>{
+    return this.http.get(`${this.baseUrl}discover/movie?api_key=${this.apiKey}&language=${this.language}&region=${this.region}&sort_by=${sort_by}&include_adult=${adult}&include_video=${video}&page=${page}&release_date.lte=${year}&with_watch_providers=${provider}&with_original_language=${language}&watch_region=${this.region}`);
   }
   getNowPlaying(page: number): Observable<any> {
     // tslint:disable-next-line: max-line-length

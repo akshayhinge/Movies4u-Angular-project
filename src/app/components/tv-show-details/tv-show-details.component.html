@@ -36,7 +36,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
-            <mat-tab-group class="mt-5 mb-5" mat-align-tabs="center" animationDuration="0ms">
+            <mat-tab-group class="mt-5" mat-align-tabs="center" animationDuration="0ms">
                 <mat-tab label="Overview">
                     <div class="listing-space info">
                         <div class="left">
@@ -122,7 +122,7 @@
                                             Network
                                         </div>
                                         <div class="comma_" *ngFor="let netwok of episode?.networks">
-                                            {{ netwok?.name }}{{netwok?.id}}
+                                            {{ netwok?.name }}
                                         </div>
                                     </li>
                                 </ul>
@@ -133,6 +133,33 @@
                 <mat-tab label="Videos">
                     <div class="listing-space videos__status">
                         <div class="items">
+                            <div class="dropdownWrapper px-3">
+                                <p-dropdown [options]="seasons_count" [(ngModel)]="selectedSeason" (onChange)="onSeasonChange()" placeholder="Select Season" [virtualScroll]="true" ></p-dropdown>
+                                <p-dropdown [options]="episodes_count" [(ngModel)]="selectedEpisode" placeholder="Select Episode" [virtualScroll]="true" styleClass="bg-dark"></p-dropdown>
+                            </div>
+                            <div (click)="openDialogWatch()" class="link item">
+                                <div class="image lazyloaded">
+                                    <img class="lazyload"
+                                    src="https://image.tmdb.org/t/p/original/{{ episode?.backdrop_path }}">
+                                    <div class="play__icon text-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"
+                                            viewBox="0 0 55 55">
+                                            <circle cx="27.5" cy="27.5" r="26.75" fill="none" stroke="#fff"
+                                                stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" />
+                                            <path fill="none" stroke="#fff" stroke-linecap="round"
+                                                stroke-linejoin="round" stroke-width="1.5"
+                                                d="M20.97 40.81L40.64 27.5 20.97 14.19v26.62z" />
+                                        </svg>
+                                        <h3>Watch Online</h3>
+                                    </div>
+                                </div>
+                                <div class="name">
+                                    {{list?.name}}
+                                </div>
+                                <div class="type">
+                                    {{list?.type}}
+                                </div>
+                            </div>
                             <div class="item" *ngFor="let list of related_video">
                                 <div (click)="openDialogTv(list)" class="link">
                                     <div class="image lazyloaded">
@@ -156,6 +183,7 @@
                                         {{list?.type}}
                                     </div>
                                 </div>
+                               
                             </div>
                         </div>
                     </div>
@@ -178,55 +206,48 @@
                 <mat-tab label="Download">
                     <div class="listing-space">
                         
-                        <div class="options text-center">
-                            <div class="1080p">
-                                <h1 class="linkTitle">Hindi + English 1080p</h1>
-                                <h1 class="link">
-                                    <a >link</a>
-
-                                </h1>
+                        <div class="options text-center" *ngFor="let download of downloads">
+                            <div class="linkTitle">
+                                <h1 >{{download?.language | titlecase}} + {{download?.name}}</h1>
                             </div>
-                            <div class="720p">
-                                <h1 class="linkTitle">720p</h1>
-                                <h1 class="link">
-                                    <a >link</a>
-
-                                </h1>
+                            <div class="link">
+                                <a href="{{download?.download_link}}"  target="_blank" ><button class="btn btn-outline-danger fs-3"><i class="material-icons fs-3">download</i>download</button> </a>
                             </div>
-                            <div class="480p">
-                                <h1 class="linkTitle">480p</h1>
-                                <h1 class="link">
-
-                                    <a >link</a>
-                                </h1>
-                            </div>
-
+                            
+                        </div>
+                        <div class="emptyMessage text-danger" *ngIf="downloads.length==0">
+                            <h3 >Sorry, No download links added yet.If you want to download it, Please comment below I will add it as soon as possible.</h3>
                         </div>
                     </div>
                 </mat-tab>
             </mat-tab-group>
-            <div class="listing-space mt-20 mb-5">
-                <div class="listing__head">
-                    <h2 class="listing__title">Recommended Movies</h2>
-                </div>
-                <p-carousel [value]="_recomend" [numVisible]="6" [numScroll]="1" [circular]="true" [responsiveOptions]="responsiveOptions">
-                    <ng-template let-recomend pTemplate="item">
-                        <div class="listing-item-style" [routerLink]="['/tv/', recomend.id]">
-                            <div class="overlay">
-                                <div class="hover"><i class="material-icons">download</i> DOWNLOAD</div>
-                            </div>
-                            <img *ngIf="recomend?.poster_path"
-                                src="https://image.tmdb.org/t/p/w370_and_h556_bestv2/{{recomend?.poster_path}}">
-                            <img *ngIf="!recomend?.poster_path" src="assets/images/default-movie.png">
-                            <h6>{{ recomend?.name }}</h6>
-                            <p class="rate"><i class="material-icons">star</i><span>{{recomend?.vote_average}}</span>
-                                /10</p>
-                            <div class="year"><span>{{recomend?.release_date | date: 'yyyy'}}</span></div>
-                        </div>
-                    </ng-template>
-                </p-carousel>
-            </div>
-
+            <hr>
+            <app-download-request [movieID]="episode?.id" [movieName]="episode?.name" [mediaType]="'tv'"></app-download-request>
+            <app-tvshow-comments [showComments]="downloads.length!=0"></app-tvshow-comments>
+           
+            
         </div>
     </div>
+</div>
+<div class="listing-space mt-20 mb-5">
+    <div class="listing__head ml-md-5">
+        <h2 class="listing__title">Recommended Movies</h2>
+    </div>
+    <p-carousel [value]="_recomend" [numVisible]="6" [numScroll]="1" [circular]="true" [responsiveOptions]="responsiveOptions">
+        <ng-template let-recomend pTemplate="item">
+            <div class="listing-item-style" [routerLink]="['/tv/', recomend.id]">
+                <div class="overlay">
+                    <div class="hover"><i class="material-icons">download</i> DOWNLOAD</div>
+                </div>
+                <img *ngIf="recomend?.poster_path"
+                    src="https://image.tmdb.org/t/p/w370_and_h556_bestv2/{{recomend?.poster_path}}">
+                <img *ngIf="!recomend?.poster_path" src="assets/images/default-movie.png">
+                <h6>{{ recomend?.name }}</h6>
+                <p class="rate"><i class="material-icons">star</i><span>{{recomend?.vote_average | number : '1.1-1'}}</span>
+                    /10</p>
+                <div class="year"><span>{{recomend?.release_date | date: 'yyyy'}}</span></div>
+            </div>
+        </ng-template>
+    </p-carousel>
+    
 </div>

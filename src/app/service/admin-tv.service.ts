@@ -1,50 +1,51 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AdminService {
+export class AdminTVService {
 
-  baseUrl = "http://localhost:8080/movies/";
+  private baseUrl = "http://localhost:8080/tv/";
+  constructor(private http:HttpClient) {}
 
-  constructor(private http: HttpClient) { }
 
-  public getMoviesBypage(page: number) {
+  public getTvShowsBypage(page: number):Observable<any> {
     let username: String = "akshay";
     let password: String = "pass123";
     const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(username + ':' + password) });
     return this.http.get(`${this.baseUrl}${page}`, { headers });
   }
   
-  public addMovieBycategory(genre:any[],movie:any){
+  public addTvShowsByGenre(genre:any[],TvShows:any):Observable<any>{
     let username: String = "akshay";
     let password: String = "pass123";
     const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(username + ':' + password) });
-    return this.http.post(`${this.baseUrl}categoryID/${genre}`,movie, { headers });
+    return this.http.post(`${this.baseUrl}genreID/${genre}`,TvShows, { headers });
   }
   
-  public updateMovieByid(id:number,movie:any){
+  public updateTvShowByid(id:number,TvShows:any):Observable<any>{
     let username: String = "akshay";
     let password: String = "pass123";
     const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(username + ':' + password) });
-    return this.http.put(`${this.baseUrl}${id}`,movie, { headers });
+    return this.http.put(`${this.baseUrl}${id}`,TvShows, { headers });
   }
 
-  public deleteMovieByid(id:number){
+  public deleteTvShowByid(id:number):Observable<any>{
     let username: String = "akshay";
     let password: String = "pass123";
     const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(username + ':' + password) });
     return this.http.delete(`${this.baseUrl}${id}`, { headers });
   }
-  public getMovieDownloadByMovieID(movieID:number){
+  public getTvShowDownloadByMovieID(TvShowID:number):Observable<any>{
     let username: String = "akshay";
     let password: String = "pass123";
     const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(username + ':' + password) });
-    return this.http.get(`${this.baseUrl}download/${movieID}`, { headers });
+    return this.http.get(`${this.baseUrl}download/${TvShowID}`, { headers });
   }
   
-  public getAllDownloadByPage(page:number){
+  public getAllTvShowByPage(page:number):Observable<any>{
     let username: String = "akshay";
     let password: String = "pass123";
     const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(username + ':' + password) });
@@ -52,74 +53,45 @@ export class AdminService {
 
   }
 
-  public addMovieDownloadByMovieID(movieID:number,movie:any){
+  public addTvShowDownloadByMovieID(TvShowID:number,TvShows:any):Observable<any>{
     let username: String = "akshay";
     let password: String = "pass123";
     const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(username + ':' + password) });
-    return this.http.post(`${this.baseUrl}download/${movieID}`,movie, { headers });
+    return this.http.post(`${this.baseUrl}download/${TvShowID}`,TvShows, { headers });
   }
-  public updateMovieDownloadByID(id:number,movie:any){
+  public updateTvShowDownloadByID(id:number,TvShows:any):Observable<any>{
     let username: String = "akshay";
     let password: String = "pass123";
     const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(username + ':' + password) });
-    return this.http.put(`${this.baseUrl}download/${id}`,movie, { headers });
+    return this.http.put(`${this.baseUrl}download/${id}`,TvShows, { headers });
   }
   
-  public deleteMovieDownloadByID(id:number){
+  public deleteTvShowDownloadByID(id:number):Observable<any>{
     let username: String = "akshay";
     let password: String = "pass123";
     const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(username + ':' + password) });
     return this.http.delete(`${this.baseUrl}download/${id}`, { headers });
   }
 
-  public getALlMovieGenre(){
+  
+  public getTvShowCommentBymovieID(TvShowID:number):Observable<any>{
     let username: String = "akshay";
     let password: String = "pass123";
     const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(username + ':' + password) });
-    return this.http.get(`${this.baseUrl}category/`, { headers });
+    return this.http.get(`${this.baseUrl}comment/${TvShowID}`, { headers });
   }
 
-  public addMovieGenre(genre:any){
+  public  addTvShowCommentBymovieID(TvShowID:number,comment:any):Observable<any>{
     let username: String = "akshay";
     let password: String = "pass123";
     const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(username + ':' + password) });
-    return this.http.post(`${this.baseUrl}category/`,genre, { headers });
-  }
-
-  public updateMovieGenreByid(id:number,genre:any){
-    let username: String = "akshay";
-    let password: String = "pass123";
-    const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(username + ':' + password) });
-    return this.http.put(`${this.baseUrl}category/${id}`,genre, { headers });
+    return this.http.post(`${this.baseUrl}comment/${TvShowID}`, comment,{ headers });
   }
   
-  public deleteMovieGenreByid(id:number){
-    let username: String = "akshay";
-    let password: String = "pass123";
-    const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(username + ':' + password) });
-    return this.http.delete(`${this.baseUrl}category/${id}`, { headers });
-  }
-  
-  public getMovieCommentBymovieID(movieID:number){
-    let username: String = "akshay";
-    let password: String = "pass123";
-    const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(username + ':' + password) });
-    return this.http.get(`${this.baseUrl}comment/${movieID}`, { headers });
-  }
-
-  public  addMovieCommentBymovieID(movieID:number,comment:any){
-    let username: String = "akshay";
-    let password: String = "pass123";
-    const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(username + ':' + password) });
-    return this.http.post(`${this.baseUrl}comment/${movieID}`, comment,{ headers });
-  }
-  
-  public deleteCommentByid(id:number){
+  public deleteCommentByid(id:number):Observable<any>{
     let username: String = "akshay";
     let password: String = "pass123";
     const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa(username + ':' + password) });
     return this.http.delete(`${this.baseUrl}comment/${id}`,{ headers });
   }
-
-
 }

@@ -9,6 +9,7 @@ import { SkeletonModule } from 'src/app/shared/skeleton/skeleton.module';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { FormsModule } from '@angular/forms';
 import { GenreListModule } from '../genre-list/genre-list.module';
+import { SearchModule } from '../search/search.module';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import { GenreListModule } from '../genre-list/genre-list.module';
     SkeletonModule,
     MatPaginatorModule,
     FormsModule,
-    GenreListModule
+    GenreListModule,
+    SearchModule
   ],
   declarations: [
     TvShowsComponent,

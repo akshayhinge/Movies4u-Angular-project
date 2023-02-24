@@ -1,4 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { ThemePalette, ProgressSpinnerMode } from '@angular/material';
+import { Router, NavigationStart, NavigationEnd } from '@angular/router';
 
 
 @Component({
@@ -10,7 +12,11 @@ export class HeaderComponent implements OnInit {
   searchBarUp;
   leftSidebar;
 
-  constructor() { }
+
+  
+  constructor(){
+
+  }
 
   ngOnInit() {
   }

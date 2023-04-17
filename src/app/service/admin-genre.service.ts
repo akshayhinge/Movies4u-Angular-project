@@ -7,7 +7,8 @@ import { Observable } from 'rxjs';
 })
 export class AdminGenreService {
 
-  private baseUrl="http://localhost:8080/genre/";
+  //private baseUrl="http://localhost:8080/genre/";
+   private baseUrl="https://movies4u-backend-production.up.railway.app/";
   constructor(private http:HttpClient) { }
 
 

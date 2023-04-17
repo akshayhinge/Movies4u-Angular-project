@@ -7,7 +7,8 @@ import { Observable } from 'rxjs';
 })
 export class AdminMovieService {
 
-  private baseUrl = "http://localhost:8080/movies/";
+ // private baseUrl = "http://localhost:8080/movies/";
+  private baseUrl = "https://movies4u-backend-production.up.railway.app/";
   constructor(private http: HttpClient) { }
   
   public getMoviesBypage(page: number):Observable<any> {

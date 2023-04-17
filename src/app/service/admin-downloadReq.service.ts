@@ -7,8 +7,8 @@ import { Observable } from 'rxjs';
 })
 export class DownloadReqService {
 
-  private baseUrlForDownloadReq="http://localhost:8080/downloadrequest/";
-  
+  //private baseUrlForDownloadReq="http://localhost:8080/downloadrequest/";
+   private baseUrlForDownloadReq="https://movies4u-backend-production.up.railway.app/";
   constructor(private http: HttpClient) { }
 
   public getDownloadRequest(page:number):Observable<any>{

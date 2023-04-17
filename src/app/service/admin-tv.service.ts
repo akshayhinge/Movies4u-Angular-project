@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 export class AdminTVService {
 
   private baseUrl = "http://localhost:8080/tv/";
+   private baseUrl = "https://movies4u-backend-production.up.railway.app/";
   constructor(private http:HttpClient) {}
 
 
